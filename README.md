@@ -213,7 +213,7 @@ Neste projeto foram utilizadas as seguintes ferramentas:
 - [TypeScript](https://www.typescriptlang.org/)
 - [Prisma](https://www.prisma.io)
 - [Docker](https://docs.docker.com/)
-- [PostgresSQL como uma imagem Docker](https://hub.docker.com/_/postgres)
+- [PostgreSQL como uma imagem Docker](https://hub.docker.com/_/postgres)
 - Autenticação com [jsonwebtoken](https://jwt.io/introduction)
 - Injeção de dependências com [tsyringe](https://www.npmjs.com/package/tsyringe)
 - Criptografia com o [bcryptjs](https://www.npmjs.com/package/bcryptjs)
@@ -238,13 +238,13 @@ $ npm install
 or
 $ yarn
 
-# Criar container PostgresSQL
+# Criar container PostgreSQL
 $ docker run --name name_container -e POSTGRES_USER=user_container -e POSTGRES_PASSWORD=password_container -p 5432:5432 -d postgres
 
-# Logar no PostgresSQL
+# Logar no PostgreSQL
 $ psql -U name_user
 
-# Logado no PostgresSQL, criar o database
+# Logado no PostgreSQL, criar o database
 $ CREATE DATABASE agrotec;
 
 # Run migrate
