@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  password    String
+  is_executor Boolean  @default(false)
+  is_admin    Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  @@map("users")
+}
+
+model Group {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+
+  categories Category[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("groups")
+}
+
+model Category {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+
+  group    Group  @relation(fields: [group_id], references: [id])
+  group_id String
+
+  products Product[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("categories")
+}
+
+model Supplier {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+
+  products Product[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("suppliers")
+}
+
+model Product {
+  id                    String @id @default(uuid())
+  image                 String
+  name                  String
+  technical_description String
+
+  supplier    Supplier @relation(fields: [supplier_id], references: [id])
+  supplier_id String
+
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@map("products")
+}
