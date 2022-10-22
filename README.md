@@ -206,7 +206,7 @@ Para um melhor entendimento do objetivo desta API, vale destacar que:
 
 ## :rocket: Tecnologias
 
-The following tools were used in this project:
+Neste projeto foram utilizadas as seguintes ferramentas:
 
 - [Node.js](https://nodejs.org/en/)
 - [Express](https://expressjs.com/pt-br/)
@@ -259,10 +259,6 @@ $ yarn dev
 
 # The server will initialize in the <http://localhost:3333>
 ```
-
-## :memo: License
-
-This project is under license from MIT. For more details, see the [LICENSE](https://github.com/elena-calcada/agrotec-api/blob/main/LICENSE) file.
 
 Made by <a href="https://github.com/elena-calcada" target="_blank">Elena Calçada</a>
 
