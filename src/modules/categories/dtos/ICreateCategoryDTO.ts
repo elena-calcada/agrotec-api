@@ -1,6 +1,6 @@
 interface ICreateCategoryDTO {
   name: string;
-  description: string;
+  description?: string;
   categoryGroup_id: string;
 }
 

@@ -2,6 +2,7 @@ import { Category } from "@prisma/client";
 
 import prismaClient from "../../../../prisma";
 import { ICreateCategoryDTO } from "../../dtos/ICreateCategoryDTO";
+import { IUpdateCategoryDTO } from "../../dtos/IUpdateCategoryDTO";
 import { ICategoriesRepository } from "../ICategoriesRepository";
 
 class CategoriesRepository implements ICategoriesRepository {
@@ -56,25 +57,12 @@ class CategoriesRepository implements ICategoriesRepository {
   }
 
   async listCategpeyByGroup(group_id?: string): Promise<Category[]> {
-    if (group_id) {
-      const categories = await prismaClient.category.findMany({
-        where: {
-          group_id,
-        },
-        orderBy: {
-          name: "asc",
-        },
-      });
-
-      return categories;
-    }
-
     const categories = await prismaClient.category.findMany({
+      where: {
+        group_id: group_id || undefined,
+      },
       orderBy: {
         name: "asc",
-      },
-      include: {
-        group: true,
       },
     });
 
@@ -85,6 +73,24 @@ class CategoriesRepository implements ICategoriesRepository {
     await prismaClient.category.delete({
       where: {
         id,
+      },
+    });
+  }
+
+  async update({
+    id,
+    name,
+    description,
+    categoryGroup_id,
+  }: IUpdateCategoryDTO): Promise<void> {
+    await prismaClient.category.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        description,
+        group_id: categoryGroup_id,
       },
     });
   }

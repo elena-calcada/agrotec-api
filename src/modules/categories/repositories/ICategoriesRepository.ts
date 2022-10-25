@@ -1,6 +1,7 @@
 import { Category } from "@prisma/client";
 
 import { ICreateCategoryDTO } from "../dtos/ICreateCategoryDTO";
+import { IUpdateCategoryDTO } from "../dtos/IUpdateCategoryDTO";
 
 interface ICategoriesRepository {
   create({
@@ -13,6 +14,12 @@ interface ICategoriesRepository {
   listAll(): Promise<Category[]>;
   listCategpeyByGroup(group_id: string): Promise<Category[]>;
   deleteCategory(id: string): Promise<void>;
+  update({
+    id,
+    name,
+    description,
+    categoryGroup_id,
+  }: IUpdateCategoryDTO): Promise<void>;
 }
 
 export { ICategoriesRepository };

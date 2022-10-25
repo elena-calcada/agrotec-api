@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "../../../../shared/errors/AppError";
 import { IUpdateCategoryGroupDTO } from "../../dtos/IUpdateCategoryGroupDTO";
 import { ICategoryGroupRepository } from "../../repositories/ICategoryGroupRepository";
 
@@ -14,6 +15,10 @@ class UpdateCategoryGroupUseCase {
     name,
     description,
   }: IUpdateCategoryGroupDTO): Promise<void> {
+    if (!name) {
+      throw new AppError("Name is required!");
+    }
+
     await this.categoryGroupRepository.update({ id, name, description });
   }
 }

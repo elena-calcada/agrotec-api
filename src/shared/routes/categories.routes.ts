@@ -9,6 +9,7 @@ import { DetailCategoryGroupController } from "../../modules/categories/useCases
 import { ListAllCatgoriesController } from "../../modules/categories/useCases/listAllCategories/ListAllCategoriesController";
 import { ListAllCategoryGroupController } from "../../modules/categories/useCases/listAllCategoryGroup/ListAllCategoryGroupController";
 import { ListCategoryByGroupController } from "../../modules/categories/useCases/listCategoryByGroup/ListCategoryByGroupController";
+import { UpdateCategoryController } from "../../modules/categories/useCases/updateCategory/UpdateCategoryController";
 import { UpdateCategoryGroupController } from "../../modules/categories/useCases/updateCategoryGroup/UpdateCategoryGroupController";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { ensureExecutor } from "../middlewares/ensureExecutor";
@@ -25,6 +26,7 @@ const listAllCategoriesByGroupController = new ListCategoryByGroupController();
 const detailCategoriesController = new DetailCategoryController();
 const deleteCategoryController = new DeleteCategoryController();
 const updateCategoryGroupController = new UpdateCategoryGroupController();
+const updateCategoryController = new UpdateCategoryController();
 
 categoriesRoutes.post(
   "/",
@@ -38,6 +40,13 @@ categoriesRoutes.get(
   ensureAuthenticated,
   ensureExecutor,
   listAllCategoriesController.handle
+);
+
+categoriesRoutes.put(
+  "/",
+  ensureAuthenticated,
+  ensureExecutor,
+  updateCategoryController.handle
 );
 
 categoriesRoutes.get(
