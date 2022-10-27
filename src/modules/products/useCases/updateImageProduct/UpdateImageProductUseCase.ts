@@ -1,34 +1,19 @@
-import { Product } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../shared/errors/AppError";
 import { deleteFile } from "../../../../shared/utils/file";
-import { IUpdateProductDTO } from "../../dtos/IUpdateProductDTO";
+import { IUpdateImageProductDTO } from "../../dtos/IUpdateImageProductDTO";
 import { IProductsRepository } from "../../repositories/IProductsRepository";
 
 @injectable()
-class UpdateProductUseCase {
+class UpdateImageProductUseCase {
   constructor(
     @inject("ProductsRepository")
     private productsRepository: IProductsRepository
   ) {}
-
-  async execute({
-    id,
-    name,
-    technical_description,
-    image,
-    category_id,
-    supplier_id,
-  }: IUpdateProductDTO): Promise<Product> {
-    if (
-      !name ||
-      !technical_description ||
-      !image ||
-      !category_id ||
-      !supplier_id
-    ) {
-      throw new AppError("All fields must be filled!");
+  async execute({ id, image }: IUpdateImageProductDTO) {
+    if (!image) {
+      throw new AppError("Image not found!");
     }
 
     const productExists = await this.productsRepository.findById(id);
@@ -39,17 +24,13 @@ class UpdateProductUseCase {
 
     await deleteFile(`./tmp/${productExists.image}`);
 
-    const product = await this.productsRepository.updateProduct({
+    const product = await this.productsRepository.updateImageProduct({
       id,
-      name,
-      technical_description,
       image,
-      category_id,
-      supplier_id,
     });
 
     return product;
   }
 }
 
-export { UpdateProductUseCase };
+export { UpdateImageProductUseCase };

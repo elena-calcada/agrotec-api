@@ -3,7 +3,8 @@ import { Product } from "@prisma/client";
 import prismaClient from "../../../../prisma";
 import { ICreateProductsDTO } from "../../dtos/ICreateProductsDTO";
 import { IFilterProductDTO } from "../../dtos/IFilterProductDTO";
-import { IUpdateProductDTO } from "../../dtos/IUpdateProductDTO";
+import { IUpdateImageProductDTO } from "../../dtos/IUpdateImageProductDTO";
+import { IUpdateInfoProductDTO } from "../../dtos/IUpdateProductDTO";
 import { IProductsRepository } from "../IProductsRepository";
 
 class ProductsRepository implements IProductsRepository {
@@ -147,14 +148,13 @@ class ProductsRepository implements IProductsRepository {
     return products;
   }
 
-  async updateProduct({
+  async updateInfoProduct({
     id,
     name,
     technical_description,
-    image,
     category_id,
     supplier_id,
-  }: IUpdateProductDTO): Promise<Product> {
+  }: IUpdateInfoProductDTO): Promise<Product> {
     const product = await prismaClient.product.update({
       where: {
         id,
@@ -162,9 +162,28 @@ class ProductsRepository implements IProductsRepository {
       data: {
         name,
         technical_description,
-        image,
         category_id,
         supplier_id,
+      },
+      include: {
+        category: true,
+        supplier: true,
+      },
+    });
+
+    return product;
+  }
+
+  async updateImageProduct({
+    id,
+    image,
+  }: IUpdateImageProductDTO): Promise<Product> {
+    const product = await prismaClient.product.update({
+      where: {
+        id,
+      },
+      data: {
+        image,
       },
       include: {
         category: true,

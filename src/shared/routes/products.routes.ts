@@ -7,7 +7,8 @@ import { DeleteProductController } from "../../modules/products/useCases/deleteP
 import { DetailProductController } from "../../modules/products/useCases/detailProduct/DetailProductController";
 import { FilterProductsController } from "../../modules/products/useCases/filterProducts/FilterProductsController";
 import { ListAllProductsController } from "../../modules/products/useCases/listAllProducts/ListAllProductsController";
-import { UpdateProductController } from "../../modules/products/useCases/updateProduct/UpdateProductController";
+import { UpdateImageProducController } from "../../modules/products/useCases/updateImageProduct/UpdateImageProductController";
+import { UpdateInfoProductController } from "../../modules/products/useCases/updateInfoProduct/UpdateInfoProductController";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { ensureExecutor } from "../middlewares/ensureExecutor";
 
@@ -19,8 +20,9 @@ const createProductsController = new CreateProductController();
 const listAllProductsController = new ListAllProductsController();
 const filterProductsController = new FilterProductsController();
 const detailProductController = new DetailProductController();
-const updateProductController = new UpdateProductController();
+const updateInfoProductController = new UpdateInfoProductController();
 const deleteProductController = new DeleteProductController();
+const updateImageProductController = new UpdateImageProducController();
 
 productsRoutes.post(
   "/",
@@ -52,11 +54,18 @@ productsRoutes.get(
 );
 
 productsRoutes.put(
-  "/",
+  "/info",
+  ensureAuthenticated,
+  ensureExecutor,
+  updateInfoProductController.handle
+);
+
+productsRoutes.put(
+  "/image",
   ensureAuthenticated,
   ensureExecutor,
   upload.single("file"),
-  updateProductController.handle
+  updateImageProductController.hendle
 );
 
 productsRoutes.delete(

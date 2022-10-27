@@ -2,7 +2,8 @@ import { Product } from "@prisma/client";
 
 import { ICreateProductsDTO } from "../dtos/ICreateProductsDTO";
 import { IFilterProductDTO } from "../dtos/IFilterProductDTO";
-import { IUpdateProductDTO } from "../dtos/IUpdateProductDTO";
+import { IUpdateImageProductDTO } from "../dtos/IUpdateImageProductDTO";
+import { IUpdateInfoProductDTO } from "../dtos/IUpdateProductDTO";
 
 interface IProductsRepository {
   create({
@@ -24,14 +25,14 @@ interface IProductsRepository {
   listAll(): Promise<Product[]>;
   listByCategory(category_id: string): Promise<Product[]>;
   listBySupplier(supplier_id: string): Promise<Product[]>;
-  updateProduct({
+  updateInfoProduct({
     id,
     name,
     technical_description,
-    image,
     category_id,
     supplier_id,
-  }: IUpdateProductDTO): Promise<Product>;
+  }: IUpdateInfoProductDTO): Promise<Product>;
+  updateImageProduct({ id, image }: IUpdateImageProductDTO): Promise<Product>;
 }
 
 export { IProductsRepository };
