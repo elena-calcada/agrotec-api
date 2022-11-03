@@ -1,18 +1,17 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import { UpdateUserUseCase } from "./UpdateUserUseCase";
+import { UpdateUserPasswordUseCase } from "./UpdateUserPasswordUseCase";
 
-class UpdateUserController {
+class UpdateUserPasswordController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.user;
-    const { name, password } = request.body;
+    const { password } = request.body;
 
-    const updateUserUseCase = container.resolve(UpdateUserUseCase);
+    const updateUserUseCase = container.resolve(UpdateUserPasswordUseCase);
 
     await updateUserUseCase.execute({
       id,
-      name,
       password,
     });
 
@@ -20,4 +19,4 @@ class UpdateUserController {
   }
 }
 
-export { UpdateUserController };
+export { UpdateUserPasswordController };

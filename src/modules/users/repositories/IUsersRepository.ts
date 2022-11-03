@@ -2,7 +2,8 @@ import { User } from "@prisma/client";
 
 import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
 import { IReturnUserDTO } from "../dtos/IReturnUserDTO";
-import { IUpdateUserDTO } from "../dtos/IUpdateUserDTO";
+import { IUpdateUserNameDTO } from "../dtos/IUpdateUserNameDTO";
+import { IUpdateUserPasswordDTO } from "../dtos/IUpdateUserPasswordDTO";
 
 interface IUsersRepository {
   create({ name, email, password }: ICreateUserDTO): Promise<void>;
@@ -14,7 +15,8 @@ interface IUsersRepository {
   deleteUser(id: string): Promise<void>;
   listAllUsers(): Promise<IReturnUserDTO[]>;
   detailUser(id: string): Promise<IReturnUserDTO>;
-  updateUser({ id, name, password }: IUpdateUserDTO): Promise<void>;
+  updateUserPassword({ id, password }: IUpdateUserPasswordDTO): Promise<void>;
+  updateUserName({ id, name }: IUpdateUserNameDTO): Promise<IReturnUserDTO>;
 }
 
 export { IUsersRepository };

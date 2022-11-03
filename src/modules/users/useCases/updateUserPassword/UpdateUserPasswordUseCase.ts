@@ -1,29 +1,29 @@
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../shared/errors/AppError";
-import { IUpdateUserDTO } from "../../dtos/IUpdateUserDTO";
+import { IUpdateUserPasswordDTO } from "../../dtos/IUpdateUserPasswordDTO";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 @injectable()
-class UpdateUserUseCase {
+class UpdateUserPasswordUseCase {
   constructor(
     @inject("UsersRepository")
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute({ id, name, password }: IUpdateUserDTO): Promise<void> {
+  async execute({ id, password }: IUpdateUserPasswordDTO): Promise<void> {
     const user = await this.usersRepository.findById(id);
 
     if (!user) {
       throw new AppError("User does not exists!");
     }
 
-    if (!name || !password) {
-      throw new AppError("All fields must be filled!");
+    if (!password) {
+      throw new AppError("Password not informed!");
     }
 
-    await this.usersRepository.updateUser({ id, name, password });
+    await this.usersRepository.updateUserPassword({ id, password });
   }
 }
 
-export { UpdateUserUseCase };
+export { UpdateUserPasswordUseCase };

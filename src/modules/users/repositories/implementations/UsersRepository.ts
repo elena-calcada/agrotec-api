@@ -4,7 +4,8 @@ import { hash } from "bcryptjs";
 import prismaClient from "../../../../prisma";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { IReturnUserDTO } from "../../dtos/IReturnUserDTO";
-import { IUpdateUserDTO } from "../../dtos/IUpdateUserDTO";
+import { IUpdateUserNameDTO } from "../../dtos/IUpdateUserNameDTO";
+import { IUpdateUserPasswordDTO } from "../../dtos/IUpdateUserPasswordDTO";
 import { IUsersRepository } from "../IUsersRepository";
 
 class UsersRepository implements IUsersRepository {
@@ -129,7 +130,10 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async updateUser({ id, name, password }: IUpdateUserDTO): Promise<void> {
+  async updateUserPassword({
+    id,
+    password,
+  }: IUpdateUserPasswordDTO): Promise<void> {
     const passwordHash = await hash(password, 8);
 
     await prismaClient.user.update({
@@ -137,10 +141,25 @@ class UsersRepository implements IUsersRepository {
         id,
       },
       data: {
-        name,
         password: passwordHash,
       },
     });
+  }
+
+  async updateUserName({
+    id,
+    name,
+  }: IUpdateUserNameDTO): Promise<IReturnUserDTO> {
+    const user = await prismaClient.user.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+      },
+    });
+
+    return user;
   }
 }
 

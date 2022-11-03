@@ -9,7 +9,8 @@ import { ListUserByIdController } from "../../modules/users/useCases/listUserByI
 import { RemoveUserAccessController } from "../../modules/users/useCases/removeUserAccess/RemoveUserAccessController";
 import { TurnUserAdminController } from "../../modules/users/useCases/turnUserAdmin/TurnUserAdminController";
 import { TurnUserExecutorController } from "../../modules/users/useCases/turnUserExecutor/TurnUserExecutorController";
-import { UpdateUserController } from "../../modules/users/useCases/updateUser/UpdateUserController";
+import { UpdateUserNameController } from "../../modules/users/useCases/updateUserName/UpdateUserNameController";
+import { UpdateUserPasswordController } from "../../modules/users/useCases/updateUserPassword/UpdateUserPasswordController";
 import { ensureAdmin } from "../middlewares/ensureAdmin";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 
@@ -23,8 +24,9 @@ const removeUserAccessController = new RemoveUserAccessController();
 const deleteUserController = new DeleteUserController();
 const listAllUsersController = new ListAllUsersController();
 const detailUserController = new DetailUserController();
-const updateUserController = new UpdateUserController();
+const updateUserPasswordController = new UpdateUserPasswordController();
 const listUserByIdController = new ListUserByIdController();
+const updateUserNameController = new UpdateUserNameController();
 
 usersRoutes.post("/", createUserController.handle);
 
@@ -74,6 +76,16 @@ usersRoutes.get(
   listUserByIdController.handle
 );
 
-usersRoutes.put("/update", ensureAuthenticated, updateUserController.handle);
+usersRoutes.put(
+  "/update/password",
+  ensureAuthenticated,
+  updateUserPasswordController.handle
+);
+
+usersRoutes.put(
+  "/update/name",
+  ensureAuthenticated,
+  updateUserNameController.handle
+);
 
 export { usersRoutes };
