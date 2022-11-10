@@ -1,7 +1,8 @@
+import { Product } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 
+import { IStorageProvider } from "../../../../shared/container/providers/StorageProvider/IStorageProvider";
 import { AppError } from "../../../../shared/errors/AppError";
-import { deleteFile } from "../../../../shared/utils/file";
 import { IUpdateImageProductDTO } from "../../dtos/IUpdateImageProductDTO";
 import { IProductsRepository } from "../../repositories/IProductsRepository";
 
@@ -9,9 +10,11 @@ import { IProductsRepository } from "../../repositories/IProductsRepository";
 class UpdateImageProductUseCase {
   constructor(
     @inject("ProductsRepository")
-    private productsRepository: IProductsRepository
+    private productsRepository: IProductsRepository,
+    @inject("StorageProvider")
+    private storageProvider: IStorageProvider
   ) {}
-  async execute({ id, image }: IUpdateImageProductDTO) {
+  async execute({ id, image }: IUpdateImageProductDTO): Promise<Product> {
     if (!image) {
       throw new AppError("Image not found!");
     }
@@ -22,14 +25,31 @@ class UpdateImageProductUseCase {
       throw new AppError("Product does not exists!");
     }
 
-    await deleteFile(`./tmp/${productExists.image}`);
+    await this.storageProvider.delete(productExists.image, "products");
+
+    await this.storageProvider.save(image, "products");
 
     const product = await this.productsRepository.updateImageProduct({
       id,
       image,
     });
 
-    return product;
+    switch (process.env.DISK) {
+      case "local":
+        return {
+          ...product,
+          image_url: `${process.env.APP_API_URL}/${product.image}`,
+        };
+
+      case "s3":
+        return {
+          ...product,
+          image_url: `${process.env.AWS_BUCKET_URL}/${product.image}`,
+        };
+
+      default:
+        return product;
+    }
   }
 }
 

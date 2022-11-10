@@ -43,6 +43,8 @@
         "no-useless-constructor": "off",
         "no-empty-function": "off",
         "lines-between-class-members": "off",
+        "no-constructor-return": "off",
+        "@typescript-eslint/no-var-requires": "off",
         "import/extensions": [
             "error",
             "ignorePackages",
@@ -73,7 +75,8 @@
             "error",
             {
                 "devDependencies": [
-                    "**/*.spec.js"
+                    "**/*.spec.ts",
+                    "**/*.js"
                 ]
             }
         ],

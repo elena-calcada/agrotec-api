@@ -1,5 +1,7 @@
 import "reflect-metadata";
+import "dotenv/config";
 import "./container";
+import "./container/providers";
 import cors from "cors";
 import "express-async-errors";
 import express, { NextFunction, Request, Response } from "express";
@@ -16,7 +18,10 @@ app.use(cors());
 
 app.use(router);
 
-app.use("/images", express.static(path.resolve(__dirname, "..", "..", "tmp")));
+app.use(
+  "/images",
+  express.static(path.resolve(__dirname, "..", "..", "tmp", "products"))
+);
 
 app.use(
   (err: Error, request: Request, response: Response, next: NextFunction) => {

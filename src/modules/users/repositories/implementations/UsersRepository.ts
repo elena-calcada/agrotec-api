@@ -9,14 +9,20 @@ import { IUpdateUserPasswordDTO } from "../../dtos/IUpdateUserPasswordDTO";
 import { IUsersRepository } from "../IUsersRepository";
 
 class UsersRepository implements IUsersRepository {
-  async create({ name, email, password }: ICreateUserDTO): Promise<void> {
-    await prismaClient.user.create({
+  async create({
+    name,
+    email,
+    password,
+  }: ICreateUserDTO): Promise<IReturnUserDTO> {
+    const user = await prismaClient.user.create({
       data: {
         name,
         email,
         password,
       },
     });
+
+    return user;
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -114,7 +120,7 @@ class UsersRepository implements IUsersRepository {
   }
 
   async detailUser(id: string): Promise<IReturnUserDTO> {
-    const user = await prismaClient.user.findFirst({
+    const user = await prismaClient.user.findUnique({
       where: {
         id,
       },

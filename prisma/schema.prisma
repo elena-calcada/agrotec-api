@@ -66,8 +66,9 @@ model Supplier {
 }
 
 model Product {
-  id                    String @id @default(uuid())
+  id                    String  @id @default(uuid())
   image                 String
+  image_url             String?
   name                  String
   technical_description String
 

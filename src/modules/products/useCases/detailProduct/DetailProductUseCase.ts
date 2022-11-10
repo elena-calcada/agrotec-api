@@ -11,13 +11,28 @@ class DetailProductUseCase {
     private productsRepository: IProductsRepository
   ) {}
   async execute(id: string): Promise<Product> {
-    const product = this.productsRepository.findById(id);
+    const product = await this.productsRepository.findById(id);
 
     if (!product) {
       throw new AppError("Product does not exists!");
     }
 
-    return product;
+    switch (process.env.DISK) {
+      case "local":
+        return {
+          ...product,
+          image_url: `${process.env.APP_API_URL}/${product.image}`,
+        };
+
+      case "s3":
+        return {
+          ...product,
+          image_url: `${process.env.AWS_BUCKET_URL}/${product.image}`,
+        };
+
+      default:
+        return product;
+    }
   }
 }
 

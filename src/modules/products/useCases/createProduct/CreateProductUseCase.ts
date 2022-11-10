@@ -1,5 +1,9 @@
+import fs from "fs";
+import { resolve } from "path";
 import { inject, injectable } from "tsyringe";
 
+import upload from "../../../../config/upload";
+import { IStorageProvider } from "../../../../shared/container/providers/StorageProvider/IStorageProvider";
 import { AppError } from "../../../../shared/errors/AppError";
 import { ICreateProductsDTO } from "../../dtos/ICreateProductsDTO";
 import { IProductsRepository } from "../../repositories/IProductsRepository";
@@ -8,7 +12,9 @@ import { IProductsRepository } from "../../repositories/IProductsRepository";
 class CreateProductUseCase {
   constructor(
     @inject("ProductsRepository")
-    private productRepository: IProductsRepository
+    private productRepository: IProductsRepository,
+    @inject("StorageProvider")
+    private storageProvider: IStorageProvider
   ) {}
   async execute({
     name,
@@ -24,8 +30,12 @@ class CreateProductUseCase {
     const product = await this.productRepository.findByName(name);
 
     if (product) {
+      const filename = resolve(upload.tmpFolder, image);
+      await fs.promises.unlink(filename);
       throw new AppError("Product already exists!");
     }
+
+    await this.storageProvider.save(image, "products");
 
     await this.productRepository.create({
       name,

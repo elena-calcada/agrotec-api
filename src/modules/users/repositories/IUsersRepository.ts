@@ -6,7 +6,7 @@ import { IUpdateUserNameDTO } from "../dtos/IUpdateUserNameDTO";
 import { IUpdateUserPasswordDTO } from "../dtos/IUpdateUserPasswordDTO";
 
 interface IUsersRepository {
-  create({ name, email, password }: ICreateUserDTO): Promise<void>;
+  create({ name, email, password }: ICreateUserDTO): Promise<IReturnUserDTO>;
   findByEmail(email: string): Promise<User | null>;
   findById(id: string): Promise<IReturnUserDTO | null>;
   turnUserAdmin(id: string): Promise<User>;

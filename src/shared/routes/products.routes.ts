@@ -1,7 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
 
-import uploadConfig from "../../config/multer";
+import uploadConfig from "../../config/upload";
 import { CreateProductController } from "../../modules/products/useCases/createProduct/CreateProductController";
 import { DeleteProductController } from "../../modules/products/useCases/deleteProducts/DeleteProductsController";
 import { DetailProductController } from "../../modules/products/useCases/detailProduct/DetailProductController";
@@ -14,7 +14,7 @@ import { ensureExecutor } from "../middlewares/ensureExecutor";
 
 const productsRoutes = Router();
 
-const upload = multer(uploadConfig.upload("./tmp"));
+const upload = multer(uploadConfig);
 
 const createProductsController = new CreateProductController();
 const listAllProductsController = new ListAllProductsController();

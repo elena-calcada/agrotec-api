@@ -2,6 +2,7 @@ import { hash } from "bcryptjs";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../shared/errors/AppError";
+import { IReturnUserDTO } from "../../dtos/IReturnUserDTO";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
 interface IUserRequest {
@@ -17,7 +18,11 @@ class CreateUserUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute({ name, email, password }: IUserRequest): Promise<void> {
+  async execute({
+    name,
+    email,
+    password,
+  }: IUserRequest): Promise<IReturnUserDTO> {
     if (!name || !email || !password) {
       throw new AppError("All fields must be filled!");
     }
@@ -30,11 +35,13 @@ class CreateUserUseCase {
 
     const passwordHash = await hash(password, 8);
 
-    await this.usersRepository.create({
+    const user = await this.usersRepository.create({
       name,
       email,
       password: passwordHash,
     });
+
+    return user;
   }
 }
 

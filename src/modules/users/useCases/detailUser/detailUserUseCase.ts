@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe";
 
+import { AppError } from "../../../../shared/errors/AppError";
 import { IReturnUserDTO } from "../../dtos/IReturnUserDTO";
 import { IUsersRepository } from "../../repositories/IUsersRepository";
 
@@ -12,6 +13,10 @@ class DetailUserUseCase {
 
   async execute(id: string): Promise<IReturnUserDTO> {
     const user = await this.usersRepository.detailUser(id);
+
+    if (!user) {
+      throw new AppError("User does not exists!");
+    }
 
     return user;
   }
