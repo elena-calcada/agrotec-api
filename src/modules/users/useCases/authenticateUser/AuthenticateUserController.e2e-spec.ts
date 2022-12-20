@@ -31,8 +31,8 @@ describe("Authenticate User Controller", () => {
 
   it("Should not be able to authenticate an user if the email or password is incorrect", async () => {
     await request(app).post("/users").send({
-      name: "new user",
-      email: "user@mail.com",
+      name: "new user 1",
+      email: "user1@mail.com",
       password: "123",
     });
 

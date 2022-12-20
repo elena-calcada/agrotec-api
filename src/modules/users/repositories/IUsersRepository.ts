@@ -9,7 +9,7 @@ interface IUsersRepository {
   create({ name, email, password }: ICreateUserDTO): Promise<IReturnUserDTO>;
   findByEmail(email: string): Promise<User | null>;
   findById(id: string): Promise<IReturnUserDTO | null>;
-  turnUserAdmin(id: string): Promise<User>;
+  turnUserAdmin(id: string): Promise<IReturnUserDTO>;
   turnUserExecutor(id: string): Promise<User>;
   removeUserAccess(id: string): Promise<User>;
   deleteUser(id: string): Promise<void>;

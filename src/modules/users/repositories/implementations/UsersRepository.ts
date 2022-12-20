@@ -52,12 +52,19 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async turnUserAdmin(id: string): Promise<User> {
+  async turnUserAdmin(id: string): Promise<IReturnUserDTO> {
     const user = await prismaClient.user.update({
       where: {
         id,
       },
       data: {
+        is_admin: true,
+        is_executor: true,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
         is_admin: true,
         is_executor: true,
       },

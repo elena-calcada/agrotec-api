@@ -15,7 +15,7 @@ export async function ensureExecutor(
   const user = await userRepository.findById(id);
 
   if (!user.is_executor) {
-    throw new AppError("This user is not an executor!");
+    throw new AppError("This user is not an executor!", 401);
   }
 
   return next();

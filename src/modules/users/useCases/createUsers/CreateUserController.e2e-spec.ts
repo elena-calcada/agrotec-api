@@ -1,6 +1,3 @@
-/**
- * @jest-environment ./prisma/prisma-environment-jest
- */
 import request from "supertest";
 
 import { app } from "../../../../shared/app";
@@ -8,8 +5,8 @@ import { app } from "../../../../shared/app";
 describe("Create User Controller", () => {
   it("Should be able to create a new user", async () => {
     const response = await request(app).post("/users").send({
-      name: "teste name",
-      email: "teste@mail.com",
+      name: "teste name 1",
+      email: "teste1@mail.com",
       password: "1230",
     });
 

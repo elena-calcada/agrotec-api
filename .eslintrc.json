@@ -72,7 +72,7 @@
             }
         ],
         "import/no-extraneous-dependencies": [
-            "error",
+            "off",
             {
                 "devDependencies": [
                     "**/*.spec.ts",

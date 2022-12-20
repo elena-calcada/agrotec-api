@@ -9,9 +9,9 @@ class TurnUserAdminController {
 
     const turnUserAdminUseCase = container.resolve(TurnUserAdminUseCase);
 
-    await turnUserAdminUseCase.execute(id);
+    const userAdmin = await turnUserAdminUseCase.execute(id);
 
-    return response.status(200).send();
+    return response.status(200).json(userAdmin);
   }
 }
 
