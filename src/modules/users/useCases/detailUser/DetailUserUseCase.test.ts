@@ -1,3 +1,6 @@
+import "reflect-metadata";
+import { describe, beforeEach, test, expect } from "vitest";
+
 import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "../createUsers/CreateUserUseCase";
@@ -14,7 +17,7 @@ describe("Detail User", () => {
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
   });
 
-  it("Should be able to access the logged in user's datails", async () => {
+  test("Should be able to access the logged in user's datails", async () => {
     const user = await createUserUseCase.execute({
       name: "test name 2",
       email: "test2@mail.com",
@@ -27,7 +30,7 @@ describe("Detail User", () => {
     expect(response.name).toEqual("test name 2");
   });
 
-  it("Should not be able to access user detail if it does not exists", async () => {
+  test("Should not be able to access user detail if it does not exists", async () => {
     expect(async () => {
       await detailUserUseCase.execute("123");
     }).rejects.toBeInstanceOf(AppError);

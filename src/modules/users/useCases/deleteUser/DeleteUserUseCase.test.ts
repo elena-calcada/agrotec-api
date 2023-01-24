@@ -1,3 +1,6 @@
+import "reflect-metadata";
+import { describe, beforeEach, test, expect } from "vitest";
+
 import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "../createUsers/CreateUserUseCase";
@@ -17,7 +20,7 @@ describe("Delete User", () => {
     listUserByIdUseCase = new ListUserByIdUseCase(usersRepositoryInMemory);
   });
 
-  it("Should be able to delete an user", async () => {
+  test("Should be able to delete an user", async () => {
     const user = await createUserUseCase.execute({
       name: "delete name",
       email: "delete@mail.com",

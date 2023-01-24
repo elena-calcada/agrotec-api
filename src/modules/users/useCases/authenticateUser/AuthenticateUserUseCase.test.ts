@@ -1,3 +1,6 @@
+import "reflect-metadata";
+import { describe, beforeEach, test, expect } from "vitest";
+
 import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "../createUsers/CreateUserUseCase";
@@ -16,7 +19,7 @@ describe("Authenticate User", () => {
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
   });
 
-  it("Should be able to authenticate an user", async () => {
+  test("Should be able to authenticate an user", async () => {
     const user = await createUserUseCase.execute({
       name: "user",
       email: "user@mail.com",
@@ -31,7 +34,7 @@ describe("Authenticate User", () => {
     expect(result).toHaveProperty("token");
   });
 
-  it("Should not be able to authenticate an user that not exists", async () => {
+  test("Should not be able to authenticate an user that not exists", async () => {
     expect(async () => {
       await authenticateUserUseCase.execute({
         email: "notexists@mail.com",
@@ -40,7 +43,7 @@ describe("Authenticate User", () => {
     }).rejects.toBeInstanceOf(AppError);
   });
 
-  it("Should not be able to authenticate an user if the email or password is incorrect", async () => {
+  test("Should not be able to authenticate an user if the email or password is incorrect", async () => {
     await createUserUseCase.execute({
       name: "test name",
       email: "user@mail.com",

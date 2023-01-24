@@ -1,3 +1,6 @@
+import "reflect-metadata";
+import { describe, beforeEach, test, expect } from "vitest";
+
 import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "../createUsers/CreateUserUseCase";
@@ -14,7 +17,7 @@ describe("List User by Id", () => {
     createUsersUseCase = new CreateUserUseCase(usersRepositoryInMemory);
   });
 
-  it("Should be able to list an user by id", async () => {
+  test("Should be able to list an user by id", async () => {
     const user = await createUsersUseCase.execute({
       name: "Bruna",
       email: "bruna@mail.com",
@@ -27,7 +30,7 @@ describe("List User by Id", () => {
     expect(response.name).toEqual("Bruna");
   });
 
-  it("Should not be able to list an user that not exists", async () => {
+  test("Should not be able to list an user that not exists", async () => {
     expect(async () => {
       await listUserByIdUseCase.execute("falseId");
     }).rejects.toBeInstanceOf(AppError);

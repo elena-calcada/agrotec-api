@@ -1,3 +1,6 @@
+import "reflect-metadata";
+import { describe, beforeEach, test, expect } from "vitest";
+
 import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "./CreateUserUseCase";
@@ -11,7 +14,7 @@ describe("Create user", () => {
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
   });
 
-  it("Should be able to create a new user", async () => {
+  test("Should be able to create a new user", async () => {
     const user = await createUserUseCase.execute({
       name: "test name",
       email: "test@mail.com",
@@ -23,7 +26,7 @@ describe("Create user", () => {
     expect(user.name).toEqual("test name");
   });
 
-  it("Should not be able to create a new user there is some information missing", async () => {
+  test("Should not be able to create a new user there is some information missing", async () => {
     expect(async () => {
       await createUserUseCase.execute({
         name: "Name",
@@ -33,7 +36,7 @@ describe("Create user", () => {
     }).rejects.toBeInstanceOf(AppError);
   });
 
-  it("should not be able to create an user that already exists", async () => {
+  test("should not be able to create an user that already exists", async () => {
     expect(async () => {
       await createUserUseCase.execute({
         name: "Name test",

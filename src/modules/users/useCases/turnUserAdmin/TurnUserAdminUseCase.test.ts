@@ -1,3 +1,6 @@
+import "reflect-metadata";
+import { describe, beforeEach, test, expect } from "vitest";
+
 import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "../createUsers/CreateUserUseCase";
@@ -14,7 +17,7 @@ describe("Turn user admin", () => {
     turnUserAdminUseCase = new TurnUserAdminUseCase(usersRepositoryInMemory);
   });
 
-  it("Should be able to grant admin access to a user", async () => {
+  test("Should be able to grant admin access to a user", async () => {
     const user = await createUsersUseCase.execute({
       name: "Veronica",
       email: "veronica@mail.com",
@@ -27,7 +30,7 @@ describe("Turn user admin", () => {
     expect(response.is_executor).toBe(true);
   });
 
-  it("Should not be able to grant admin access an user that does not exists", async () => {
+  test("Should not be able to grant admin access an user that does not exists", async () => {
     expect(async () => {
       await turnUserAdminUseCase.execute("falseId");
     }).rejects.toBeInstanceOf(AppError);
