@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-import { CreateSupplierController } from "../../modules/supplier/useCases/createSupplier/CreateSupplierController";
-import { DeleteSupplierController } from "../../modules/supplier/useCases/deleteSupplier/DeleteSupplierController";
-import { DetailSupplierController } from "../../modules/supplier/useCases/detailSupplier/DetailSupplierController";
-import { ListAllSuppliersController } from "../../modules/supplier/useCases/listAllSuppliers/ListAllSupliersController";
-import { UpdateSupplierController } from "../../modules/supplier/useCases/updateSupplier/UpdateSupplierController";
+import { CreateSupplierController } from "../../../../modules/supplier/useCases/createSupplier/CreateSupplierController";
+import { DeleteSupplierController } from "../../../../modules/supplier/useCases/deleteSupplier/DeleteSupplierController";
+import { DetailSupplierController } from "../../../../modules/supplier/useCases/detailSupplier/DetailSupplierController";
+import { ListAllSuppliersController } from "../../../../modules/supplier/useCases/listAllSuppliers/ListAllSupliersController";
+import { UpdateSupplierController } from "../../../../modules/supplier/useCases/updateSupplier/UpdateSupplierController";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { ensureExecutor } from "../middlewares/ensureExecutor";
 

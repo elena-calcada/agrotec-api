@@ -1,3 +1,4 @@
+import { hash } from "bcryptjs";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../shared/errors/AppError";
@@ -22,7 +23,12 @@ class UpdateUserPasswordUseCase {
       throw new AppError("Password not informed!");
     }
 
-    await this.usersRepository.updateUserPassword({ id, password });
+    const passwordHash = await hash(password, 8);
+
+    await this.usersRepository.updateUserPassword({
+      id,
+      password: passwordHash,
+    });
   }
 }
 

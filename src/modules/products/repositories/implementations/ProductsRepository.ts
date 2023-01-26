@@ -1,6 +1,6 @@
 import { Product } from "@prisma/client";
 
-import prismaClient from "../../../../prisma";
+import prismaClient from "../../../../shared/infra/prisma/prisma.config";
 import { ICreateProductsDTO } from "../../dtos/ICreateProductsDTO";
 import { IFilterProductDTO } from "../../dtos/IFilterProductDTO";
 import { IUpdateImageProductDTO } from "../../dtos/IUpdateImageProductDTO";

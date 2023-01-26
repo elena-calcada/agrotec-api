@@ -1,14 +1,14 @@
 import { Router } from "express";
 import multer from "multer";
 
-import uploadConfig from "../../config/upload";
-import { CreateProductController } from "../../modules/products/useCases/createProduct/CreateProductController";
-import { DeleteProductController } from "../../modules/products/useCases/deleteProducts/DeleteProductsController";
-import { DetailProductController } from "../../modules/products/useCases/detailProduct/DetailProductController";
-import { FilterProductsController } from "../../modules/products/useCases/filterProducts/FilterProductsController";
-import { ListAllProductsController } from "../../modules/products/useCases/listAllProducts/ListAllProductsController";
-import { UpdateImageProducController } from "../../modules/products/useCases/updateImageProduct/UpdateImageProductController";
-import { UpdateInfoProductController } from "../../modules/products/useCases/updateInfoProduct/UpdateInfoProductController";
+import uploadConfig from "../../../../config/upload";
+import { CreateProductController } from "../../../../modules/products/useCases/createProduct/CreateProductController";
+import { DeleteProductController } from "../../../../modules/products/useCases/deleteProducts/DeleteProductsController";
+import { DetailProductController } from "../../../../modules/products/useCases/detailProduct/DetailProductController";
+import { FilterProductsController } from "../../../../modules/products/useCases/filterProducts/FilterProductsController";
+import { ListAllProductsController } from "../../../../modules/products/useCases/listAllProducts/ListAllProductsController";
+import { UpdateImageProducController } from "../../../../modules/products/useCases/updateImageProduct/UpdateImageProductController";
+import { UpdateInfoProductController } from "../../../../modules/products/useCases/updateInfoProduct/UpdateInfoProductController";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { ensureExecutor } from "../middlewares/ensureExecutor";
 

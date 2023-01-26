@@ -1,6 +1,6 @@
 import { Category } from "@prisma/client";
 
-import prismaClient from "../../../../prisma";
+import prismaClient from "../../../../shared/infra/prisma/prisma.config";
 import { ICreateCategoryDTO } from "../../dtos/ICreateCategoryDTO";
 import { IUpdateCategoryDTO } from "../../dtos/IUpdateCategoryDTO";
 import { ICategoriesRepository } from "../ICategoriesRepository";

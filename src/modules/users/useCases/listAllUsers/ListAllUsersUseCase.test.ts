@@ -32,5 +32,7 @@ describe("List All Users", () => {
     const list = await listAllUsersUseCase.execute();
 
     expect(list.length).toBe(2);
+    expect(list[0].name).toEqual("João");
+    expect(list[1].name).toEqual("Pedro");
   });
 });

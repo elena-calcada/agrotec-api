@@ -1,6 +1,6 @@
 import { Group } from "@prisma/client";
 
-import prismaClient from "../../../../prisma";
+import prismaClient from "../../../../shared/infra/prisma/prisma.config";
 import { ICreateCategoryGroupDTO } from "../../dtos/ICreateCategoryGroupDTO";
 import { IUpdateCategoryGroupDTO } from "../../dtos/IUpdateCategoryGroupDTO";
 import { ICategoryGroupRepository } from "../ICategoryGroupRepository";

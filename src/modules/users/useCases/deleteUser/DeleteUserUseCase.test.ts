@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { describe, beforeEach, test, expect } from "vitest";
 
-import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "../createUsers/CreateUserUseCase";
 import { ListUserByIdUseCase } from "../listUserById/ListUserByIdUseCase";
@@ -31,6 +30,6 @@ describe("Delete User", () => {
 
     expect(async () => {
       await listUserByIdUseCase.execute(user.id);
-    }).rejects.toBeInstanceOf(AppError);
+    }).rejects.toThrow("User does not exists!");
   });
 });

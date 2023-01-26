@@ -9,9 +9,9 @@ class TurnUserExecutorController {
 
     const turnUserExecutorUseCase = container.resolve(TurnUserExecutorUseCase);
 
-    await turnUserExecutorUseCase.execute(id);
+    const userExecutor = await turnUserExecutorUseCase.execute(id);
 
-    return response.status(200).send();
+    return response.status(200).json(userExecutor);
   }
 }
 

@@ -1,6 +1,6 @@
 import { Supplier } from "@prisma/client";
 
-import prismaClient from "../../../../prisma";
+import prismaClient from "../../../../shared/infra/prisma/prisma.config";
 import { ICreateSupplierDTO } from "../../dtos/ICreateSupplierDTO";
 import { IUpdateSupplierDTO } from "../../dtos/IUpdateSupplierDTO";
 import { ISupplierRepository } from "../ISupplierRepository";

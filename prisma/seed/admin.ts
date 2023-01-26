@@ -1,6 +1,6 @@
 import { hash } from "bcryptjs";
 
-import prismaClient from "../../src/prisma";
+import prismaClient from "../../src/shared/infra/prisma/prisma.config";
 
 async function userAdmin() {
   const passwordHash = await hash(process.env.PASSWORD_ADMIN, 8);

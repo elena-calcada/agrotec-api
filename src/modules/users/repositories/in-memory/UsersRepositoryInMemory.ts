@@ -1,9 +1,9 @@
 import { v4 as uuid } from "uuid";
 
-import { User } from "../../../../entities/User";
 import { IReturnUserDTO } from "../../dtos/IReturnUserDTO";
 import { IUpdateUserNameDTO } from "../../dtos/IUpdateUserNameDTO";
 import { IUpdateUserPasswordDTO } from "../../dtos/IUpdateUserPasswordDTO";
+import { User } from "../../entities/user.entity";
 import { IUsersRepository } from "../IUsersRepository";
 
 class UsersRepositoryInMemory implements IUsersRepository {
@@ -33,7 +33,7 @@ class UsersRepositoryInMemory implements IUsersRepository {
     return user;
   }
 
-  async turnUserAdmin(id: string): Promise<User> {
+  async turnUserAdmin(id: string): Promise<IReturnUserDTO> {
     const user = this.users.find((user) => user.id === id);
     user.is_admin = true;
     user.is_executor = true;
@@ -41,14 +41,14 @@ class UsersRepositoryInMemory implements IUsersRepository {
     return user;
   }
 
-  async turnUserExecutor(id: string): Promise<User> {
+  async turnUserExecutor(id: string): Promise<IReturnUserDTO> {
     const user = this.users.find((user) => user.id === id);
     user.is_executor = true;
 
     return user;
   }
 
-  async removeUserAccess(id: string): Promise<User> {
+  async removeUserAccess(id: string): Promise<IReturnUserDTO> {
     const user = this.users.find((user) => user.id === id);
     user.is_admin = false;
     user.is_executor = false;

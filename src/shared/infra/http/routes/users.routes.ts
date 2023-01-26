@@ -1,16 +1,16 @@
 import { Router } from "express";
 
-import { AuthenticateUserController } from "../../modules/users/useCases/authenticateUser/AuthenticateUserController";
-import { CreateUserController } from "../../modules/users/useCases/createUsers/CreateUserController";
-import { DeleteUserController } from "../../modules/users/useCases/deleteUser/DeleteUserController";
-import { DetailUserController } from "../../modules/users/useCases/detailUser/DetailUserController";
-import { ListAllUsersController } from "../../modules/users/useCases/listAllUsers/ListAllUsersController";
-import { ListUserByIdController } from "../../modules/users/useCases/listUserById/ListUserByIdController";
-import { RemoveUserAccessController } from "../../modules/users/useCases/removeUserAccess/RemoveUserAccessController";
-import { TurnUserAdminController } from "../../modules/users/useCases/turnUserAdmin/TurnUserAdminController";
-import { TurnUserExecutorController } from "../../modules/users/useCases/turnUserExecutor/TurnUserExecutorController";
-import { UpdateUserNameController } from "../../modules/users/useCases/updateUserName/UpdateUserNameController";
-import { UpdateUserPasswordController } from "../../modules/users/useCases/updateUserPassword/UpdateUserPasswordController";
+import { AuthenticateUserController } from "../../../../modules/users/useCases/authenticateUser/AuthenticateUserController";
+import { CreateUserController } from "../../../../modules/users/useCases/createUsers/CreateUserController";
+import { DeleteUserController } from "../../../../modules/users/useCases/deleteUser/DeleteUserController";
+import { DetailUserController } from "../../../../modules/users/useCases/detailUser/DetailUserController";
+import { ListAllUsersController } from "../../../../modules/users/useCases/listAllUsers/ListAllUsersController";
+import { ListUserByIdController } from "../../../../modules/users/useCases/listUserById/ListUserByIdController";
+import { RemoveUserAccessController } from "../../../../modules/users/useCases/removeUserAccess/RemoveUserAccessController";
+import { TurnUserAdminController } from "../../../../modules/users/useCases/turnUserAdmin/TurnUserAdminController";
+import { TurnUserExecutorController } from "../../../../modules/users/useCases/turnUserExecutor/TurnUserExecutorController";
+import { UpdateUserNameController } from "../../../../modules/users/useCases/updateUserName/UpdateUserNameController";
+import { UpdateUserPasswordController } from "../../../../modules/users/useCases/updateUserPassword/UpdateUserPasswordController";
 import { ensureAdmin } from "../middlewares/ensureAdmin";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 

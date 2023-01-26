@@ -7,7 +7,7 @@
     "seed": "ts-node-dev prisma/seed/admin.ts"
   },
   "scripts": {
-    "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/shared/server.ts",
+    "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "test": "vitest"
   },
   "devDependencies": {

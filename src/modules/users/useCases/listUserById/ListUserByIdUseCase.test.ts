@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { describe, beforeEach, test, expect } from "vitest";
 
-import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "../createUsers/CreateUserUseCase";
 import { ListUserByIdUseCase } from "./ListUserByIdUseCase";
@@ -33,6 +32,6 @@ describe("List User by Id", () => {
   test("Should not be able to list an user that not exists", async () => {
     expect(async () => {
       await listUserByIdUseCase.execute("falseId");
-    }).rejects.toBeInstanceOf(AppError);
+    }).rejects.toThrow("User does not exists!");
   });
 });

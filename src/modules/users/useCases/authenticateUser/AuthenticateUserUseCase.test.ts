@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { describe, beforeEach, test, expect } from "vitest";
 
-import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "../createUsers/CreateUserUseCase";
 import { AuthenticateUserUseCase } from "./AuthenticateUserUseCase";
@@ -32,6 +31,7 @@ describe("Authenticate User", () => {
     });
 
     expect(result).toHaveProperty("token");
+    expect(result.user.name).toEqual("user");
   });
 
   test("Should not be able to authenticate an user that not exists", async () => {
@@ -40,10 +40,10 @@ describe("Authenticate User", () => {
         email: "notexists@mail.com",
         password: "111",
       });
-    }).rejects.toBeInstanceOf(AppError);
+    }).rejects.toThrow("E-mail or password incorrect!");
   });
 
-  test("Should not be able to authenticate an user if the email or password is incorrect", async () => {
+  test("Should not be able to authenticate an user if the password is incorrect", async () => {
     await createUserUseCase.execute({
       name: "test name",
       email: "user@mail.com",
@@ -55,6 +55,21 @@ describe("Authenticate User", () => {
         email: "user@mail.com",
         password: "incorrect password",
       });
-    }).rejects.toBeInstanceOf(AppError);
+    }).rejects.toThrow("E-mail or password incorrect!");
+  });
+
+  test("Should not be able to authenticate an user if the email is incorrect", async () => {
+    await createUserUseCase.execute({
+      name: "test name",
+      email: "user@mail.com",
+      password: "12345",
+    });
+
+    expect(async () => {
+      await authenticateUserUseCase.execute({
+        email: "incorrect mail",
+        password: "12345",
+      });
+    }).rejects.toThrow("E-mail or password incorrect!");
   });
 });

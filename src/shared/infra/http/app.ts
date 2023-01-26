@@ -1,13 +1,13 @@
 import "reflect-metadata";
 import "dotenv/config";
-import "./container";
-import "./container/providers";
+import "../../container";
+import "../../container/providers";
 import cors from "cors";
 import "express-async-errors";
 import express, { NextFunction, Request, Response } from "express";
 import path from "path";
 
-import { AppError } from "./errors/AppError";
+import { AppError } from "../../errors/AppError";
 import { router } from "./routes";
 
 const app = express();

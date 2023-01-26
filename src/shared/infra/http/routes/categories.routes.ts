@@ -1,16 +1,16 @@
 import { Router } from "express";
 
-import { CreateCategoryController } from "../../modules/categories/useCases/createCategory/CreateCategoryController";
-import { CreateCategoryGroupContrller } from "../../modules/categories/useCases/createCategoryGroup/CreateCategoryGroupController";
-import { DeleteCategoryController } from "../../modules/categories/useCases/deleteCategory/DeleteCategoryController";
-import { DeleteCategoryGroupController } from "../../modules/categories/useCases/deleteCategoryGroup/DeleteCategoryGroupController";
-import { DetailCategoryController } from "../../modules/categories/useCases/detailCategory/DetailCategoryController";
-import { DetailCategoryGroupController } from "../../modules/categories/useCases/detailCategoryGroup/DetailCategoryGroupController";
-import { ListAllCatgoriesController } from "../../modules/categories/useCases/listAllCategories/ListAllCategoriesController";
-import { ListAllCategoryGroupController } from "../../modules/categories/useCases/listAllCategoryGroup/ListAllCategoryGroupController";
-import { ListCategoryByGroupController } from "../../modules/categories/useCases/listCategoryByGroup/ListCategoryByGroupController";
-import { UpdateCategoryController } from "../../modules/categories/useCases/updateCategory/UpdateCategoryController";
-import { UpdateCategoryGroupController } from "../../modules/categories/useCases/updateCategoryGroup/UpdateCategoryGroupController";
+import { CreateCategoryController } from "../../../../modules/categories/useCases/createCategory/CreateCategoryController";
+import { CreateCategoryGroupContrller } from "../../../../modules/categories/useCases/createCategoryGroup/CreateCategoryGroupController";
+import { DeleteCategoryController } from "../../../../modules/categories/useCases/deleteCategory/DeleteCategoryController";
+import { DeleteCategoryGroupController } from "../../../../modules/categories/useCases/deleteCategoryGroup/DeleteCategoryGroupController";
+import { DetailCategoryController } from "../../../../modules/categories/useCases/detailCategory/DetailCategoryController";
+import { DetailCategoryGroupController } from "../../../../modules/categories/useCases/detailCategoryGroup/DetailCategoryGroupController";
+import { ListAllCatgoriesController } from "../../../../modules/categories/useCases/listAllCategories/ListAllCategoriesController";
+import { ListAllCategoryGroupController } from "../../../../modules/categories/useCases/listAllCategoryGroup/ListAllCategoryGroupController";
+import { ListCategoryByGroupController } from "../../../../modules/categories/useCases/listCategoryByGroup/ListCategoryByGroupController";
+import { UpdateCategoryController } from "../../../../modules/categories/useCases/updateCategory/UpdateCategoryController";
+import { UpdateCategoryGroupController } from "../../../../modules/categories/useCases/updateCategoryGroup/UpdateCategoryGroupController";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 import { ensureExecutor } from "../middlewares/ensureExecutor";
 

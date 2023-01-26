@@ -9,9 +9,9 @@ class RemoveUserAccessController {
 
     const removeUserAccessUseCase = container.resolve(RemoveUserAccessUseCase);
 
-    await removeUserAccessUseCase.executor(id);
+    const user = await removeUserAccessUseCase.execute(id);
 
-    return response.status(200).send();
+    return response.status(200).json(user);
   }
 }
 

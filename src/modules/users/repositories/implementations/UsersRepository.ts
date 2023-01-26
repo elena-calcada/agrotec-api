@@ -1,11 +1,9 @@
-import { User } from "@prisma/client";
-import { hash } from "bcryptjs";
-
-import prismaClient from "../../../../prisma";
+import prismaClient from "../../../../shared/infra/prisma/prisma.config";
 import { ICreateUserDTO } from "../../dtos/ICreateUserDTO";
 import { IReturnUserDTO } from "../../dtos/IReturnUserDTO";
 import { IUpdateUserNameDTO } from "../../dtos/IUpdateUserNameDTO";
 import { IUpdateUserPasswordDTO } from "../../dtos/IUpdateUserPasswordDTO";
+import { User } from "../../entities/user.entity";
 import { IUsersRepository } from "../IUsersRepository";
 
 class UsersRepository implements IUsersRepository {
@@ -19,6 +17,13 @@ class UsersRepository implements IUsersRepository {
         name,
         email,
         password,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        is_admin: true,
+        is_executor: true,
       },
     });
 
@@ -73,7 +78,7 @@ class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  async turnUserExecutor(id: string): Promise<User> {
+  async turnUserExecutor(id: string): Promise<IReturnUserDTO> {
     const user = await prismaClient.user.update({
       where: {
         id,
@@ -82,12 +87,19 @@ class UsersRepository implements IUsersRepository {
         is_admin: false,
         is_executor: true,
       },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        is_admin: true,
+        is_executor: true,
+      },
     });
 
     return user;
   }
 
-  async removeUserAccess(id: string): Promise<User> {
+  async removeUserAccess(id: string): Promise<IReturnUserDTO> {
     const user = await prismaClient.user.update({
       where: {
         id,
@@ -95,6 +107,13 @@ class UsersRepository implements IUsersRepository {
       data: {
         is_admin: false,
         is_executor: false,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        is_admin: true,
+        is_executor: true,
       },
     });
 
@@ -147,14 +166,12 @@ class UsersRepository implements IUsersRepository {
     id,
     password,
   }: IUpdateUserPasswordDTO): Promise<void> {
-    const passwordHash = await hash(password, 8);
-
     await prismaClient.user.update({
       where: {
         id,
       },
       data: {
-        password: passwordHash,
+        password,
       },
     });
   }
@@ -169,6 +186,13 @@ class UsersRepository implements IUsersRepository {
       },
       data: {
         name,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        is_admin: true,
+        is_executor: true,
       },
     });
 

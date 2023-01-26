@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { describe, beforeEach, test, expect } from "vitest";
 
-import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "../createUsers/CreateUserUseCase";
 import { DetailUserUseCase } from "./DetailUserUseCase";
@@ -32,7 +31,7 @@ describe("Detail User", () => {
 
   test("Should not be able to access user detail if it does not exists", async () => {
     expect(async () => {
-      await detailUserUseCase.execute("123");
-    }).rejects.toBeInstanceOf(AppError);
+      await detailUserUseCase.execute("incorrect id");
+    }).rejects.toThrow("User does not exists!");
   });
 });

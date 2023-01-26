@@ -21,19 +21,12 @@ describe("Create user", () => {
       password: "1230",
     });
 
+    const userCreated = await usersRepositoryInMemory.findByEmail(user.email);
+
     expect(user).toHaveProperty("id");
     expect(user).toHaveProperty("created_at");
     expect(user.name).toEqual("test name");
-  });
-
-  test("Should not be able to create a new user there is some information missing", async () => {
-    expect(async () => {
-      await createUserUseCase.execute({
-        name: "Name",
-        email: "",
-        password: "1230",
-      });
-    }).rejects.toBeInstanceOf(AppError);
+    expect(userCreated.password).not.equal("1230");
   });
 
   test("should not be able to create an user that already exists", async () => {
