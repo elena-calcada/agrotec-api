@@ -33,13 +33,13 @@ class AuthenticateUserUseCase {
     const user = await this.usersRepository.findByEmail(email);
 
     if (!user) {
-      throw new AppError("E-mail or password incorrect!");
+      throw new AppError("E-mail or password incorrect!", 401);
     }
 
     const passwordMatch = await compare(password, user.password);
 
     if (!passwordMatch) {
-      throw new AppError("E-mail or password incorrect!");
+      throw new AppError("E-mail or password incorrect!", 401);
     }
 
     const { secret, expiresIn } = authConfig.jwt;

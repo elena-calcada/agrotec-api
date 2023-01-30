@@ -1,0 +1,702 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Sistema AGROTEC",
+    "description": "Essa api é responsável pelo cadastramento de produtos da AGROTEC",
+    "version": "1.0.0 "
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Create an user",
+        "description": "Create an user",
+        "tags": [
+          "users"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List all users",
+        "description": "List all users",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListAllUsersResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete an user",
+        "description": "Delete an user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "User id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "User does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Authenticate user",
+        "description": "Authenticate user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SessionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authenticated user"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List logged in user details",
+        "description": "List logged in user details",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserMeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/detail": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List user by id",
+        "description": "List user by id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "User id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserDetailResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/admin": {
+      "put": {
+        "summary": "Turn an user an admin user",
+        "description": "Turn an user an admin user",
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TurnUserAdminRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TurnUserAdminResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/executor": {
+      "put": {
+        "summary": "Turn an user an executor user",
+        "description": "Turn an user an executor user",
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TurnUserExecutorRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TurnUserExecutorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/remove-access": {
+      "put": {
+        "summary": "Remove user access",
+        "description": "Remove user access",
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveAccessRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RemoveAccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "User does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/name": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Change the name of the logged in user",
+        "description": "Change the name of the logged in user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateNameResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/password": {
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Change the Password of the logged in user",
+        "description": "Change the Password of the logged in user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdatePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "user_name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User e-mail",
+            "example": "user_email@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "user_password"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
+      },
+      "SessionRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User e-mail",
+            "example": "user_email@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "password_test"
+          }
+        }
+      },
+      "UserMeResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "user_name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User e-mail",
+            "example": "user_email@mail.com"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "description": "Admin authorization",
+            "example": false
+          },
+          "is_executor": {
+            "type": "boolean",
+            "description": "Executor authorization",
+            "example": false
+          }
+        }
+      },
+      "UserDetailResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "user_name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User e-mail",
+            "example": "user_email@mail.com"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "description": "Admin authorization",
+            "example": false
+          },
+          "is_executor": {
+            "type": "boolean",
+            "description": "Executor authorization",
+            "example": false
+          }
+        }
+      },
+      "ListAllUsersResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "User ID",
+              "format": "uuid"
+            },
+            "name": {
+              "type": "string",
+              "description": "User name",
+              "example": "user_name"
+            },
+            "email": {
+              "type": "string",
+              "description": "User e-mail",
+              "example": "user_email@mail.com"
+            },
+            "is_admin": {
+              "type": "boolean",
+              "description": "Admin authorization",
+              "example": false
+            },
+            "is_executor": {
+              "type": "boolean",
+              "description": "Executor authorization",
+              "example": false
+            }
+          }
+        }
+      },
+      "TurnUserAdminRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          }
+        }
+      },
+      "TurnUserAdminResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "user_name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User e-mail",
+            "example": "user_email@mail.com"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "description": "Admin authorization",
+            "example": true
+          },
+          "is_executor": {
+            "type": "boolean",
+            "description": "Executor authorization",
+            "example": true
+          }
+        }
+      },
+      "TurnUserExecutorRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          }
+        }
+      },
+      "TurnUserExecutorResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "user_name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User e-mail",
+            "example": "user_email@mail.com"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "description": "Admin authorization",
+            "example": false
+          },
+          "is_executor": {
+            "type": "boolean",
+            "description": "Executor authorization",
+            "example": true
+          }
+        }
+      },
+      "RemoveAccessRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          }
+        }
+      },
+      "RemoveAccessResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "user_name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User e-mail",
+            "example": "user_email@mail.com"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "description": "Admin authorization",
+            "example": false
+          },
+          "is_executor": {
+            "type": "boolean",
+            "description": "Executor authorization",
+            "example": false
+          }
+        }
+      },
+      "UpdateNameRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "user_name"
+          }
+        }
+      },
+      "UpdateNameResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "user_name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User e-mail",
+            "example": "user_email@mail.com"
+          },
+          "is_admin": {
+            "type": "boolean",
+            "description": "Admin authorization",
+            "example": false
+          },
+          "is_executor": {
+            "type": "boolean",
+            "description": "Executor authorization",
+            "example": false
+          }
+        }
+      },
+      "UpdatePasswordRequest": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "user_password"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "description": "Autenticação da API",
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "tokenUrl": "http://localhost:3000/users/session"
+      }
+    }
+  }
+}

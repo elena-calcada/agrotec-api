@@ -30,7 +30,7 @@ const updateUserNameController = new UpdateUserNameController();
 
 usersRoutes.post("/", createUserController.handle);
 
-usersRoutes.post("/session", authenticateUserController.handle);
+usersRoutes.post("/login", authenticateUserController.handle);
 
 usersRoutes.put(
   "/executor",
@@ -67,25 +67,21 @@ usersRoutes.get(
   listAllUsersController.handle
 );
 
-usersRoutes.get("/detail", ensureAuthenticated, detailUserController.handle);
+usersRoutes.get("/me", ensureAuthenticated, detailUserController.handle);
 
 usersRoutes.get(
-  "/detail/id",
+  "/detail",
   ensureAuthenticated,
   ensureAdmin,
   listUserByIdController.handle
 );
 
 usersRoutes.put(
-  "/update/password",
+  "/password",
   ensureAuthenticated,
   updateUserPasswordController.handle
 );
 
-usersRoutes.put(
-  "/update/name",
-  ensureAuthenticated,
-  updateUserNameController.handle
-);
+usersRoutes.put("/name", ensureAuthenticated, updateUserNameController.handle);
 
 export { usersRoutes };
