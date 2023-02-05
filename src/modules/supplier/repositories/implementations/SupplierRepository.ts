@@ -1,18 +1,18 @@
-import { Supplier } from "@prisma/client";
-
 import prismaClient from "../../../../shared/infra/prisma/prisma.config";
-import { ICreateSupplierDTO } from "../../dtos/ICreateSupplierDTO";
 import { IUpdateSupplierDTO } from "../../dtos/IUpdateSupplierDTO";
+import { Supplier } from "../../entities/supplier.entity";
 import { ISupplierRepository } from "../ISupplierRepository";
 
 class SupplierRepository implements ISupplierRepository {
-  async create({ name, description }: ICreateSupplierDTO): Promise<void> {
-    await prismaClient.supplier.create({
+  async save(data: Supplier): Promise<Supplier> {
+    const supplier = await prismaClient.supplier.create({
       data: {
-        name,
-        description,
+        name: data.name,
+        description: data.description,
       },
     });
+
+    return supplier;
   }
 
   async findByName(name: string): Promise<Supplier> {
@@ -53,8 +53,12 @@ class SupplierRepository implements ISupplierRepository {
     });
   }
 
-  async update({ id, name, description }: IUpdateSupplierDTO): Promise<void> {
-    await prismaClient.supplier.update({
+  async update({
+    id,
+    name,
+    description,
+  }: IUpdateSupplierDTO): Promise<Supplier> {
+    const supplier = await prismaClient.supplier.update({
       where: {
         id,
       },
@@ -62,12 +66,9 @@ class SupplierRepository implements ISupplierRepository {
         name,
         description,
       },
-      select: {
-        id: true,
-        name: true,
-        description: true,
-      },
     });
+
+    return supplier;
   }
 }
 

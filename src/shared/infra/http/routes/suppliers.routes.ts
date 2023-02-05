@@ -38,7 +38,7 @@ suppliersRoutes.get(
 );
 
 suppliersRoutes.delete(
-  "/",
+  "/:id",
   ensureAuthenticated,
   ensureExecutor,
   deleteSupplierController.handle

@@ -13,6 +13,12 @@ class DeleteSupplierUseCase {
     private productsRepository: IProductsRepository
   ) {}
   async execute(id: string): Promise<void> {
+    const supplierExists = await this.supplierRepository.findById(id);
+
+    if (!supplierExists) {
+      throw new AppError("Supplier does not exists!");
+    }
+
     const products = await this.productsRepository.listBySupplier(id);
 
     if (products.length !== 0) {

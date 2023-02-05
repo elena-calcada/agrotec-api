@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { describe, beforeEach, test, expect } from "vitest";
 
-import { AppError } from "../../../../shared/errors/AppError";
 import { UsersRepositoryInMemory } from "../../repositories/in-memory/UsersRepositoryInMemory";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 
@@ -30,18 +29,18 @@ describe("Create user", () => {
   });
 
   test("should not be able to create an user that already exists", async () => {
-    expect(async () => {
-      await createUserUseCase.execute({
-        name: "Name test",
-        email: "mail@mail.com",
-        password: "12345",
-      });
+    await createUserUseCase.execute({
+      name: "Name test",
+      email: "mail@mail.com",
+      password: "12345",
+    });
 
+    expect(async () => {
       await createUserUseCase.execute({
         name: "Test name",
         email: "mail@mail.com",
         password: "123",
       });
-    }).rejects.toBeInstanceOf(AppError);
+    }).rejects.toThrow("User already exists!");
   });
 });

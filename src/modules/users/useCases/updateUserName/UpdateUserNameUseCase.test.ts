@@ -33,7 +33,7 @@ describe("Update user name", () => {
     expect(user.name).toEqual("Veronica");
   });
 
-  test("Should be able to update an user name if user does not exists", async () => {
+  test("Should not be able to update an user name if user does not exists", async () => {
     expect(async () => {
       await updateUserNameUseCase.execute({
         id: "false_id",
@@ -42,7 +42,7 @@ describe("Update user name", () => {
     }).rejects.toThrow("User does not exists!");
   });
 
-  test("Should be able to update an user name if user name does not informed", async () => {
+  test("Should not be able to update an user name if user name does not informed", async () => {
     const user = await createUsersUseCase.execute({
       name: "user",
       email: "veronica@mail.com",

@@ -79,8 +79,7 @@
             "description": "User id",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             }
           }
         ],
@@ -177,8 +176,7 @@
             "description": "User id",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "string"
             }
           }
         ],
@@ -396,6 +394,180 @@
         "responses": {
           "200": {
             "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/suppliers": {
+      "post": {
+        "summary": "Create an supplier",
+        "description": "Create an supplier",
+        "tags": [
+          "suppliers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupplierRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "suppliers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List all suppliers",
+        "description": "List all suppliers",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update supplier",
+        "description": "Update supplier",
+        "tags": [
+          "suppliers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSupplierRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Supplier does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/suppliers/{id}": {
+      "delete": {
+        "tags": [
+          "suppliers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete an supplier",
+        "description": "Delete an supplier",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "User id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Supplier does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/suppliers/detail": {
+      "get": {
+        "tags": [
+          "suppliers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List supplier detail",
+        "description": "List supplier detail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Supplier id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SupplierDetailResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Supplier does not exists!"
           },
           "401": {
             "description": "Unauthorized"
@@ -711,6 +883,80 @@
             "example": "user_password"
           }
         }
+      },
+      "SupplierRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Suplier ame",
+            "example": "supplier_name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Suplier description",
+            "example": "supplier_description"
+          }
+        },
+        "required": [
+          "name",
+          "description"
+        ]
+      },
+      "UpdateSupplierRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Suplier ame",
+            "example": "supplier_name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Suplier description",
+            "example": "supplier_description"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description"
+        ]
+      },
+      "SupplierDetailResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "User name",
+            "example": "user_name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Suplier description",
+            "example": "supplier_description"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Updated at",
+            "format": "date"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Created at",
+            "format": "date"
+          }
+        }
       }
     },
     "securitySchemes": {
@@ -719,7 +965,7 @@
         "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT",
-        "tokenUrl": "http://localhost:3000/users/session"
+        "tokenUrl": "http://localhost:3000/users/login"
       }
     }
   }
