@@ -61,21 +61,22 @@ describe("Update Supplier", () => {
         name: "",
         description: "description_one",
       });
-    }).rejects.toThrow("Fill in all fields");
+    }).rejects.toThrow("Name is required!");
   });
 
-  test("Should not be able to update an supplier name if supplier description does not informed", async () => {
+  test("Should be able to update an supplier name if supplier description does not informed", async () => {
     const supplier = await createSupplierUseCase.execute({
       name: "name_one",
       description: "description_one",
     });
 
-    expect(async () => {
-      await updateSupplierUseCase.execute({
-        id: supplier.id,
-        name: "name_one",
-        description: "",
-      });
-    }).rejects.toThrow("Fill in all fields");
+    await updateSupplierUseCase.execute({
+      id: supplier.id,
+      name: "name_two",
+      description: "",
+    });
+
+    expect(supplier.name).toEqual("name_two");
+    expect(supplier.description).toEqual("");
   });
 });

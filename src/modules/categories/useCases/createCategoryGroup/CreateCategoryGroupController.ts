@@ -11,9 +11,12 @@ class CreateCategoryGroupContrller {
       CreateCategoryGroupUseCase
     );
 
-    await createCategoryGroupUseCase.execute({ name, description });
+    const group = await createCategoryGroupUseCase.execute({
+      name,
+      description,
+    });
 
-    return response.status(201).send();
+    return response.status(201).json(group);
   }
 }
 

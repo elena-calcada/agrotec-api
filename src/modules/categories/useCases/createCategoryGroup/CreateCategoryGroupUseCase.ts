@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../shared/errors/AppError";
+import { CategoryGroup } from "../../entities/category-group.entity";
 import { ICategoryGroupRepository } from "../../repositories/ICategoryGroupRepository";
 
 interface IRequest {
@@ -15,18 +16,21 @@ class CreateCategoryGroupUseCase {
     private categoryGroupRepository: ICategoryGroupRepository
   ) {}
 
-  async execute({ name, description }: IRequest) {
-    if (!name) {
-      throw new AppError("All fields must be filled!");
-    }
+  async execute({ name, description }: IRequest): Promise<CategoryGroup> {
+    const groupExists = await this.categoryGroupRepository.findByName(name);
 
-    const group = await this.categoryGroupRepository.findByName(name);
-
-    if (group) {
+    if (groupExists) {
       throw new AppError("Category group already exists!");
     }
 
-    await this.categoryGroupRepository.create({ name, description });
+    const groupCreated = CategoryGroup.create({
+      name,
+      description,
+    });
+
+    const group = await this.categoryGroupRepository.save(groupCreated);
+
+    return group;
   }
 }
 

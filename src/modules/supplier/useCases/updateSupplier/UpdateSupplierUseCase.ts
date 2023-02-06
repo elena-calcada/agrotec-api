@@ -23,8 +23,8 @@ class UpdateSupplierUseCase {
       throw new AppError("Supplier does not exists!");
     }
 
-    if (!name || !description) {
-      throw new AppError("Fill in all fields");
+    if (!name) {
+      throw new AppError("Name is required!");
     }
 
     const supplierUpdated = await this.supplierRepository.update({

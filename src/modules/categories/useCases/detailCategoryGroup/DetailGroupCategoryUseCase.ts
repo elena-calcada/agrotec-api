@@ -1,7 +1,7 @@
-import { Group } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../shared/errors/AppError";
+import { CategoryGroup } from "../../entities/category-group.entity";
 import { ICategoryGroupRepository } from "../../repositories/ICategoryGroupRepository";
 
 @injectable()
@@ -10,7 +10,7 @@ class DetailGroupCategoryUseCase {
     @inject("CategoryGroupRepository")
     private categoryGroupRepository: ICategoryGroupRepository
   ) {}
-  async execute(id: string): Promise<Group> {
+  async execute(id: string): Promise<CategoryGroup> {
     const group = await this.categoryGroupRepository.findById(id);
 
     if (!group) {

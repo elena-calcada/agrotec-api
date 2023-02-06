@@ -11,9 +11,13 @@ class UpdateCategoryGroupController {
       UpdateCategoryGroupUseCase
     );
 
-    await updateCategoryGroupUseCase.execute({ id, description, name });
+    const group = await updateCategoryGroupUseCase.execute({
+      id,
+      description,
+      name,
+    });
 
-    return response.status(200).send();
+    return response.status(200).json(group);
   }
 }
 
