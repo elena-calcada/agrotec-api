@@ -78,7 +78,7 @@ categoriesRoutes.post(
 );
 
 categoriesRoutes.delete(
-  "/group",
+  "/group/:id",
   ensureAuthenticated,
   ensureExecutor,
   deleteCategoryGroupController.handle

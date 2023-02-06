@@ -5,13 +5,13 @@ import { DeleteCategoryGroupUseCase } from "./DeleteCategoryGroupUseCase";
 
 class DeleteCategoryGroupController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.query;
+    const { id } = request.params;
 
     const deleteCategoryGroupUseCase = container.resolve(
       DeleteCategoryGroupUseCase
     );
 
-    await deleteCategoryGroupUseCase.execute(id as string);
+    await deleteCategoryGroupUseCase.execute(id);
 
     return response.status(200).send();
   }

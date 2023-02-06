@@ -14,6 +14,12 @@ class DeleteCategoryGroupUseCase {
   ) {}
 
   async execute(id: string): Promise<void> {
+    const groupExists = await this.categoryGroupRepository.findById(id);
+
+    if (!groupExists) {
+      throw new AppError("Category Group does not exists", 400);
+    }
+
     const categories = await this.categoriesRepository.listCategpeyByGroup(id);
 
     if (categories.length !== 0) {

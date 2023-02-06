@@ -1,21 +1,21 @@
-import { Group } from "@prisma/client";
-
 import prismaClient from "../../../../shared/infra/prisma/prisma.config";
-import { ICreateCategoryGroupDTO } from "../../dtos/ICreateCategoryGroupDTO";
 import { IUpdateCategoryGroupDTO } from "../../dtos/IUpdateCategoryGroupDTO";
+import { CategoryGroup } from "../../entities/category-group.entity";
 import { ICategoryGroupRepository } from "../ICategoryGroupRepository";
 
 class CategoryGroupRepository implements ICategoryGroupRepository {
-  async create({ name, description }: ICreateCategoryGroupDTO): Promise<void> {
-    await prismaClient.group.create({
+  async save(data: CategoryGroup): Promise<CategoryGroup> {
+    const group = await prismaClient.group.create({
       data: {
-        name,
-        description,
+        name: data.name,
+        description: data.description,
       },
     });
+
+    return group;
   }
 
-  async findByName(name: string): Promise<Group> {
+  async findByName(name: string): Promise<CategoryGroup> {
     const group = await prismaClient.group.findFirst({
       where: {
         name,
@@ -25,7 +25,7 @@ class CategoryGroupRepository implements ICategoryGroupRepository {
     return group;
   }
 
-  async findById(id: string): Promise<Group> {
+  async findById(id: string): Promise<CategoryGroup> {
     const group = await prismaClient.group.findUnique({
       where: {
         id,
@@ -43,7 +43,7 @@ class CategoryGroupRepository implements ICategoryGroupRepository {
     });
   }
 
-  async listAllGroups(): Promise<Group[]> {
+  async listAllGroups(): Promise<CategoryGroup[]> {
     const groups = await prismaClient.group.findMany({
       orderBy: {
         name: "asc",
@@ -57,8 +57,8 @@ class CategoryGroupRepository implements ICategoryGroupRepository {
     id,
     name,
     description,
-  }: IUpdateCategoryGroupDTO): Promise<void> {
-    await prismaClient.group.update({
+  }: IUpdateCategoryGroupDTO): Promise<CategoryGroup> {
+    const group = await prismaClient.group.update({
       where: {
         id,
       },
@@ -66,12 +66,9 @@ class CategoryGroupRepository implements ICategoryGroupRepository {
         name,
         description,
       },
-      select: {
-        id: true,
-        name: true,
-        description: true,
-      },
     });
+
+    return group;
   }
 }
 

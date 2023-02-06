@@ -577,6 +577,180 @@
           }
         }
       }
+    },
+    "/categories/group": {
+      "post": {
+        "summary": "Create an category group",
+        "description": "Create an category group",
+        "tags": [
+          "category_groups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryGroupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "category_groups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List all category groups",
+        "description": "List all category groups",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update category groups",
+        "description": "Update category groups",
+        "tags": [
+          "category_groups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCategoryGroupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Supplier does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/categories/group/{id}": {
+      "delete": {
+        "tags": [
+          "category_groups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete an category group",
+        "description": "Delete an category group",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Category group id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Category group does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/categories/group/detail": {
+      "get": {
+        "tags": [
+          "category_groups"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List category group detail",
+        "description": "List category group detail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Category group id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryGroupDetailResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Category group does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -899,8 +1073,7 @@
           }
         },
         "required": [
-          "name",
-          "description"
+          "name"
         ]
       },
       "UpdateSupplierRequest": {
@@ -908,7 +1081,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "User ID",
+            "description": "Suplier ID",
             "format": "uuid"
           },
           "name": {
@@ -924,8 +1097,7 @@
         },
         "required": [
           "id",
-          "name",
-          "description"
+          "name"
         ]
       },
       "SupplierDetailResponse": {
@@ -938,8 +1110,8 @@
           },
           "name": {
             "type": "string",
-            "description": "User name",
-            "example": "user_name"
+            "description": "Supplier name",
+            "example": "supplier_name"
           },
           "description": {
             "type": "string",
@@ -957,6 +1129,78 @@
             "format": "date"
           }
         }
+      },
+      "CategoryGroupRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "category group ame",
+            "example": "group_name"
+          },
+          "description": {
+            "type": "string",
+            "description": "category group description",
+            "example": "group_description"
+          }
+        },
+        "required": [
+          "name"
+        ]
+      },
+      "CategoryGroupDetailResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Category group name",
+            "example": "group_name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Category group description",
+            "example": "group_description"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Updated at",
+            "format": "date"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Created at",
+            "format": "date"
+          }
+        }
+      },
+      "UpdateCategoryGroupRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Category group ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Category group name",
+            "example": "group_name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Category group description",
+            "example": "group_description"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ]
       }
     },
     "securitySchemes": {
