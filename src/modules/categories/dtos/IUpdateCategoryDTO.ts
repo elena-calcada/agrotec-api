@@ -2,7 +2,7 @@ interface IUpdateCategoryDTO {
   id: string;
   name: string;
   description?: string;
-  categoryGroup_id: string;
+  group_id: string;
 }
 
 export { IUpdateCategoryDTO };

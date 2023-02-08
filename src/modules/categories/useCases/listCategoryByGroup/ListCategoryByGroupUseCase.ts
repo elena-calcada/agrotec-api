@@ -1,6 +1,6 @@
-import { Category } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 
+import { Category } from "../../entities/category.entity";
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
 @injectable()
@@ -11,17 +11,9 @@ class ListCategoryByGroupUseCase {
   ) {}
 
   async execute(group_id?: string): Promise<Category[]> {
-    /* if (!group_id) {
-      const categories = await this.categoriesRepository.listAll();
-
-      return categories;
-    } */
-
     const categories = await this.categoriesRepository.listCategpeyByGroup(
       group_id as string
     );
-
-    // console.log(group_id);
 
     return categories;
   }

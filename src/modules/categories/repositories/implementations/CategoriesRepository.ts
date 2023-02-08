@@ -1,23 +1,19 @@
-import { Category } from "@prisma/client";
-
 import prismaClient from "../../../../shared/infra/prisma/prisma.config";
-import { ICreateCategoryDTO } from "../../dtos/ICreateCategoryDTO";
 import { IUpdateCategoryDTO } from "../../dtos/IUpdateCategoryDTO";
+import { Category } from "../../entities/category.entity";
 import { ICategoriesRepository } from "../ICategoriesRepository";
 
 class CategoriesRepository implements ICategoriesRepository {
-  async create({
-    name,
-    description,
-    categoryGroup_id,
-  }: ICreateCategoryDTO): Promise<void> {
-    await prismaClient.category.create({
+  async save(data: Category): Promise<Category> {
+    const category = await prismaClient.category.create({
       data: {
-        name,
-        description,
-        group_id: categoryGroup_id,
+        name: data.name,
+        description: data.description,
+        group_id: data.group_id,
       },
     });
+
+    return category;
   }
 
   async findByName(name: string): Promise<Category> {
@@ -81,18 +77,20 @@ class CategoriesRepository implements ICategoriesRepository {
     id,
     name,
     description,
-    categoryGroup_id,
-  }: IUpdateCategoryDTO): Promise<void> {
-    await prismaClient.category.update({
+    group_id,
+  }: IUpdateCategoryDTO): Promise<Category> {
+    const category = await prismaClient.category.update({
       where: {
         id,
       },
       data: {
         name,
         description,
-        group_id: categoryGroup_id,
+        group_id,
       },
     });
+
+    return category;
   }
 }
 

@@ -20,7 +20,7 @@ describe("Detail Category Group", () => {
     );
   });
 
-  test("Should be able to access grou detail", async () => {
+  test("Should be able to access group detail", async () => {
     const group = await createCategoryGroupUseCase.execute({
       name: "group_name",
       description: "group_description",

@@ -6,22 +6,22 @@ import { UpdateCategoryUseCase } from "./updateCategoryUseCase";
 
 class UpdateCategoryController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id, name, description, categoryGroup_id } = request.body;
+    const { id, name, description, group_id } = request.body;
 
-    if (!name || !categoryGroup_id) {
+    if (!name || !group_id) {
       throw new AppError("Name and group are required");
     }
 
     const updateCategoryUseCase = container.resolve(UpdateCategoryUseCase);
 
-    await updateCategoryUseCase.execute({
+    const category = await updateCategoryUseCase.execute({
       id,
       name,
       description,
-      categoryGroup_id,
+      group_id,
     });
 
-    return response.status(200).send();
+    return response.status(200).json(category);
   }
 }
 

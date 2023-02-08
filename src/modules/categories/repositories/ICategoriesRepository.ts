@@ -1,14 +1,8 @@
-import { Category } from "@prisma/client";
-
-import { ICreateCategoryDTO } from "../dtos/ICreateCategoryDTO";
 import { IUpdateCategoryDTO } from "../dtos/IUpdateCategoryDTO";
+import { Category } from "../entities/category.entity";
 
 interface ICategoriesRepository {
-  create({
-    name,
-    description,
-    categoryGroup_id,
-  }: ICreateCategoryDTO): Promise<void>;
+  save(data: Category): Promise<Category>;
   findByName(name: string): Promise<Category>;
   findById(id: string): Promise<Category>;
   listAll(): Promise<Category[]>;
@@ -18,8 +12,8 @@ interface ICategoriesRepository {
     id,
     name,
     description,
-    categoryGroup_id,
-  }: IUpdateCategoryDTO): Promise<void>;
+    group_id,
+  }: IUpdateCategoryDTO): Promise<Category>;
 }
 
 export { ICategoriesRepository };

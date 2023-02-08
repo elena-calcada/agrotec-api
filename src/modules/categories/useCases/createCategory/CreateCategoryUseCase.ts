@@ -2,6 +2,7 @@ import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../shared/errors/AppError";
 import { ICreateCategoryDTO } from "../../dtos/ICreateCategoryDTO";
+import { Category } from "../../entities/category.entity";
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
 
 @injectable()
@@ -14,23 +15,23 @@ class CreateCategorysUseCase {
   async execute({
     name,
     description,
-    categoryGroup_id,
-  }: ICreateCategoryDTO): Promise<void> {
-    if (!name || !description || !categoryGroup_id) {
-      throw new AppError("All fields must be filled!");
-    }
+    group_id,
+  }: ICreateCategoryDTO): Promise<Category> {
+    const categoryExists = await this.categoriesRepository.findByName(name);
 
-    const category = await this.categoriesRepository.findByName(name);
-
-    if (category) {
+    if (categoryExists) {
       throw new AppError("Category already exists!");
     }
 
-    await this.categoriesRepository.create({
+    const categoryCteated = Category.create({
       name,
       description,
-      categoryGroup_id,
+      group_id,
     });
+
+    const category = await this.categoriesRepository.save(categoryCteated);
+
+    return category;
   }
 }
 
