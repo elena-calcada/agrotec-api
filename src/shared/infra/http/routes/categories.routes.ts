@@ -64,7 +64,7 @@ categoriesRoutes.get(
 );
 
 categoriesRoutes.delete(
-  "/",
+  "/:id",
   ensureAuthenticated,
   ensureExecutor,
   deleteCategoryController.handle

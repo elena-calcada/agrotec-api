@@ -1,11 +1,13 @@
 import "reflect-metadata";
 import { describe, beforeEach, test, expect } from "vitest";
 
+import { CategoryGroupRepositoryInMemory } from "../../repositories/in-memory/CategoryGroupRepositoryInMemory";
 import { CategoryRepositoryInMemory } from "../../repositories/in-memory/CategoryRepositoryInMemory";
 import { CreateCategorysUseCase } from "../createCategory/CreateCategoryUseCase";
 import { DetailCategoryUseCase } from "./DetailCategoryUseCase";
 
 let categoryRepositoryInMemory: CategoryRepositoryInMemory;
+let categoryGroupRepository: CategoryGroupRepositoryInMemory;
 let createCategoryUseCase: CreateCategorysUseCase;
 let detailCategoryUseCase: DetailCategoryUseCase;
 
@@ -13,7 +15,8 @@ describe("Detail Category", () => {
   beforeEach(() => {
     categoryRepositoryInMemory = new CategoryRepositoryInMemory();
     createCategoryUseCase = new CreateCategorysUseCase(
-      categoryRepositoryInMemory
+      categoryRepositoryInMemory,
+      categoryGroupRepository
     );
     detailCategoryUseCase = new DetailCategoryUseCase(
       categoryRepositoryInMemory

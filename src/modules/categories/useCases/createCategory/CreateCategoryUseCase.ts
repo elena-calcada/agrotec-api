@@ -4,12 +4,15 @@ import { AppError } from "../../../../shared/errors/AppError";
 import { ICreateCategoryDTO } from "../../dtos/ICreateCategoryDTO";
 import { Category } from "../../entities/category.entity";
 import { ICategoriesRepository } from "../../repositories/ICategoriesRepository";
+import { ICategoryGroupRepository } from "../../repositories/ICategoryGroupRepository";
 
 @injectable()
 class CreateCategorysUseCase {
   constructor(
     @inject("CategoriesRepository")
-    private categoriesRepository: ICategoriesRepository
+    private categoriesRepository: ICategoriesRepository,
+    @inject("CategoryGroupRepository")
+    private categoryGroupRepository: ICategoryGroupRepository
   ) {}
 
   async execute({
@@ -21,6 +24,12 @@ class CreateCategorysUseCase {
 
     if (categoryExists) {
       throw new AppError("Category already exists!");
+    }
+
+    const group = await this.categoryGroupRepository.findById(group_id);
+
+    if (!group) {
+      throw new AppError("Category group does not exists!");
     }
 
     const categoryCteated = Category.create({

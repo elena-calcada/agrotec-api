@@ -13,6 +13,12 @@ class DeleteCategoryUseCase {
     private productsRepository: IProductsRepository
   ) {}
   async execute(id: string): Promise<void> {
+    const categoryExists = await this.categoriesRepository.findById(id);
+
+    if (!categoryExists) {
+      throw new AppError("Category does not exists");
+    }
+
     const products = await this.productsRepository.listByCategory(id);
 
     if (products.length !== 0) {

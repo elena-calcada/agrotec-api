@@ -578,6 +578,211 @@
         }
       }
     },
+    "/categories": {
+      "post": {
+        "summary": "Create a category",
+        "description": "Create an category",
+        "tags": [
+          "categories"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "categories"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List all categories",
+        "description": "List all categories",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update category",
+        "description": "Update category",
+        "tags": [
+          "categories"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCategoryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Supplier does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/categories/{id}": {
+      "delete": {
+        "tags": [
+          "categories"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete an category",
+        "description": "Delete an category",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Category id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Category does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/categories/detail": {
+      "get": {
+        "tags": [
+          "categories"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List category detail",
+        "description": "List category detail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Category id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Category does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/categories/by-group": {
+      "get": {
+        "tags": [
+          "categories"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List category by category group",
+        "description": "List category by category group",
+        "parameters": [
+          {
+            "name": "group_id",
+            "in": "query",
+            "description": "Category group id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Category does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
     "/categories/group": {
       "post": {
         "summary": "Create an category group",
@@ -1117,6 +1322,86 @@
             "type": "string",
             "description": "Suplier description",
             "example": "supplier_description"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Updated at",
+            "format": "date"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Created at",
+            "format": "date"
+          }
+        }
+      },
+      "CategoryRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "category ame",
+            "example": "category_name"
+          },
+          "description": {
+            "type": "string",
+            "description": "category description",
+            "example": "category_description"
+          },
+          "group_id": {
+            "type": "string",
+            "description": "category description",
+            "format": "uuid"
+          }
+        }
+      },
+      "UpdateCategoryRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Category ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Category name",
+            "example": "category_name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Category description",
+            "example": "category_description"
+          },
+          "group_id": {
+            "type": "string",
+            "description": "category description",
+            "format": "uuid"
+          }
+        }
+      },
+      "CategoryDetailResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID",
+            "format": "uuid"
+          },
+          "name": {
+            "type": "string",
+            "description": "Category name",
+            "example": "group_name"
+          },
+          "description": {
+            "type": "string",
+            "description": "Category description",
+            "example": "group_description"
+          },
+          "group_id": {
+            "type": "string",
+            "description": "Category id",
+            "format": "uuid"
           },
           "updated_at": {
             "type": "string",

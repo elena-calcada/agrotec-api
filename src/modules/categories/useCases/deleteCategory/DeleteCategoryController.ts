@@ -5,11 +5,11 @@ import { DeleteCategoryUseCase } from "./DeleteCategoryUseCase";
 
 class DeleteCategoryController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.query;
+    const { id } = request.params;
 
     const deleteCategoryUseCase = container.resolve(DeleteCategoryUseCase);
 
-    await deleteCategoryUseCase.execute(id as string);
+    await deleteCategoryUseCase.execute(id);
 
     return response.status(200).send();
   }
