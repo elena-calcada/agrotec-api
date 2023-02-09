@@ -1,17 +1,35 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
+import { z } from "zod";
 
+import { ValidationSchemaError } from "../../../../shared/errors/valitation-schema.error";
+import { validatorSchema } from "../../../../shared/validator/zod";
 import { DetailCategoryUseCase } from "./DetailCategoryUseCase";
 
 class DetailCategoryController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.query;
 
-    const detailCategoryUseCase = container.resolve(DetailCategoryUseCase);
+    const detailSchema = z.object({
+      id: z.string().uuid({
+        message: "Invalid id",
+      }),
+    });
 
-    const category = await detailCategoryUseCase.execute(id as string);
+    try {
+      validatorSchema(detailSchema, { id });
 
-    return response.json(category);
+      const detailCategoryUseCase = container.resolve(DetailCategoryUseCase);
+
+      const category = await detailCategoryUseCase.execute(id as string);
+
+      return response.json(category);
+    } catch (err: any) {
+      if (err instanceof ValidationSchemaError) {
+        return response.status(err.statusCode).json(err.errors);
+      }
+      return response.status(err.statusCode).json(err.message);
+    }
   }
 }
 

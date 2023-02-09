@@ -1,27 +1,35 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
+import { z } from "zod";
 
-import { AppError } from "../../../../shared/errors/AppError";
+import { ValidationSchemaError } from "../../../../shared/errors/valitation-schema.error";
+import { validatorSchema } from "../../../../shared/validator/zod";
 import { UpdateCategoryUseCase } from "./updateCategoryUseCase";
 
 class UpdateCategoryController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id, name, description, group_id } = request.body;
+    const { body } = request;
 
-    if (!name || !group_id) {
-      throw new AppError("Name and group are required");
-    }
-
-    const updateCategoryUseCase = container.resolve(UpdateCategoryUseCase);
-
-    const category = await updateCategoryUseCase.execute({
-      id,
-      name,
-      description,
-      group_id,
+    const updateSchema = z.object({
+      name: z.string(),
+      description: z.string().max(200),
+      group_id: z.string().uuid(),
     });
 
-    return response.status(200).json(category);
+    try {
+      validatorSchema(updateSchema, body);
+
+      const updateCategoryUseCase = container.resolve(UpdateCategoryUseCase);
+
+      const category = await updateCategoryUseCase.execute(body);
+
+      return response.status(200).json(category);
+    } catch (err: any) {
+      if (err instanceof ValidationSchemaError) {
+        return response.status(err.statusCode).json(err.errors);
+      }
+      return response.status(err.statusCode).json(err.message);
+    }
   }
 }
 
