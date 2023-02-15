@@ -8,7 +8,7 @@ import { ListUserByIdUseCase } from "./ListUserByIdUseCase";
 
 class ListUserByIdController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.query;
+    const { id } = request.params;
 
     const listUserByIdSchema = z.object({
       id: z.string().uuid({

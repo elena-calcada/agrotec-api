@@ -157,7 +157,7 @@
         }
       }
     },
-    "/users/detail": {
+    "/users/{id}": {
       "get": {
         "tags": [
           "users"
@@ -172,7 +172,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
             "description": "User id",
             "required": true,
             "schema": {

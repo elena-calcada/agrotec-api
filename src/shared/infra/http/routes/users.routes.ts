@@ -70,7 +70,7 @@ usersRoutes.get(
 usersRoutes.get("/me", ensureAuthenticated, detailUserController.handle);
 
 usersRoutes.get(
-  "/detail",
+  "/:id",
   ensureAuthenticated,
   ensureAdmin,
   listUserByIdController.handle
