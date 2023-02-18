@@ -8,7 +8,7 @@ import { DetailCategoryUseCase } from "./DetailCategoryUseCase";
 
 class DetailCategoryController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.query;
+    const { id } = request.params;
 
     const detailSchema = z.object({
       id: z.string().uuid({

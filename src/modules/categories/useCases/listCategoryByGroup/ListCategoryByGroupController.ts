@@ -11,9 +11,12 @@ class ListCategoryByGroupController {
     const { group_id } = request.query;
 
     const byGroupSchema = z.object({
-      group_id: z.string().uuid({
-        message: "Invalid id",
-      }),
+      group_id: z
+        .string()
+        .uuid({
+          message: "Invalid id",
+        })
+        .optional(),
     });
 
     try {

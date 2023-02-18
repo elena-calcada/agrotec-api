@@ -1,19 +1,23 @@
 import "reflect-metadata";
 import { describe, beforeEach, test, expect } from "vitest";
 
+import { CategoryGroupRepositoryInMemory } from "../../repositories/in-memory/CategoryGroupRepositoryInMemory";
 import { CategoryRepositoryInMemory } from "../../repositories/in-memory/CategoryRepositoryInMemory";
 import { CreateCategorysUseCase } from "../createCategory/CreateCategoryUseCase";
 import { ListCategoryByGroupUseCase } from "./ListCategoryByGroupUseCase";
 
 let categoryRepositoryInMemory: CategoryRepositoryInMemory;
+let categoryGroupRepositoryInMemory: CategoryGroupRepositoryInMemory;
 let createCategoryUseCase: CreateCategorysUseCase;
 let listCategoryByGroupUseCase: ListCategoryByGroupUseCase;
 
 describe("List Categories By Group", () => {
   beforeEach(() => {
     categoryRepositoryInMemory = new CategoryRepositoryInMemory();
+    categoryGroupRepositoryInMemory = new CategoryGroupRepositoryInMemory();
     createCategoryUseCase = new CreateCategorysUseCase(
-      categoryRepositoryInMemory
+      categoryRepositoryInMemory,
+      categoryGroupRepositoryInMemory
     );
     listCategoryByGroupUseCase = new ListCategoryByGroupUseCase(
       categoryRepositoryInMemory
@@ -74,5 +78,13 @@ describe("List Categories By Group", () => {
     const listCategoriesByGoup = await listCategoryByGroupUseCase.execute();
 
     expect(listCategoriesByGoup).length(3);
+  });
+
+  test("Should not be able to list category by category group if group does not exists", async () => {
+    const listCategoriesByGoup = await listCategoryByGroupUseCase.execute(
+      "invalid_group_id"
+    );
+
+    expect(listCategoriesByGoup).length(0);
   });
 });

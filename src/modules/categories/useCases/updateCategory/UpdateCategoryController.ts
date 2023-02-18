@@ -12,7 +12,7 @@ class UpdateCategoryController {
 
     const updateSchema = z.object({
       name: z.string(),
-      description: z.string().max(200),
+      description: z.string().max(200).optional(),
       group_id: z.string().uuid(),
     });
 

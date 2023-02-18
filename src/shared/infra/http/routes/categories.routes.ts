@@ -57,7 +57,7 @@ categoriesRoutes.get(
 );
 
 categoriesRoutes.get(
-  "/detail",
+  "/detail/:id",
   ensureAuthenticated,
   ensureExecutor,
   detailCategoriesController.handle
@@ -85,7 +85,7 @@ categoriesRoutes.delete(
 );
 
 categoriesRoutes.get(
-  "/group/detail",
+  "/group/detail/:id",
   ensureAuthenticated,
   ensureExecutor,
   detailCategoryGroupController.handle

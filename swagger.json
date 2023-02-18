@@ -706,7 +706,7 @@
         }
       }
     },
-    "/categories/detail": {
+    "/categories/detail/{id}": {
       "get": {
         "tags": [
           "categories"
@@ -721,7 +721,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
             "description": "Category id",
             "required": true,
             "schema": {
@@ -911,7 +911,7 @@
         }
       }
     },
-    "/categories/group/detail": {
+    "/categories/group/detail/{id}": {
       "get": {
         "tags": [
           "category_groups"
@@ -926,7 +926,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
             "description": "Category group id",
             "required": true,
             "schema": {

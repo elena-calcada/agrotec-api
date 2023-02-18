@@ -30,7 +30,8 @@ describe("Delete Category Group", () => {
       categoryGroupRepositoryInMemory
     );
     createCategoryUseCase = new CreateCategorysUseCase(
-      categoryRepositoryInMemory
+      categoryRepositoryInMemory,
+      categoryGroupRepositoryInMemory
     );
   });
 
