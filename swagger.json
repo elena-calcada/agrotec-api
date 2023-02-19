@@ -532,7 +532,7 @@
         }
       }
     },
-    "/suppliers/detail": {
+    "/suppliers/detail/{id}": {
       "get": {
         "tags": [
           "suppliers"
@@ -547,7 +547,7 @@
         "parameters": [
           {
             "name": "id",
-            "in": "query",
+            "in": "path",
             "description": "Supplier id",
             "required": true,
             "schema": {

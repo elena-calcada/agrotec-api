@@ -31,7 +31,7 @@ suppliersRoutes.get(
 );
 
 suppliersRoutes.get(
-  "/detail",
+  "/detail/:id",
   ensureAuthenticated,
   ensureExecutor,
   detailSupplierController.handle
