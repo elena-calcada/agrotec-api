@@ -1,18 +1,10 @@
-import { Product } from "@prisma/client";
-
-import { ICreateProductsDTO } from "../dtos/ICreateProductsDTO";
 import { IFilterProductDTO } from "../dtos/IFilterProductDTO";
 import { IUpdateImageProductDTO } from "../dtos/IUpdateImageProductDTO";
 import { IUpdateInfoProductDTO } from "../dtos/IUpdateProductDTO";
+import { Product } from "../entities/product.entity";
 
 interface IProductsRepository {
-  create({
-    name,
-    technical_description,
-    image,
-    category_id,
-    supplier_id,
-  }: ICreateProductsDTO): Promise<void>;
+  save(data: Product): Promise<Product>;
   findByName(name: string): Promise<Product>;
   findById(id: string): Promise<Product>;
   findByNameOrCategoryOrSupplierOrGroup({

@@ -1,9 +1,9 @@
-import { Product } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 
 import { IStorageProvider } from "../../../../shared/container/providers/StorageProvider/IStorageProvider";
 import { AppError } from "../../../../shared/errors/AppError";
 import { IUpdateImageProductDTO } from "../../dtos/IUpdateImageProductDTO";
+import { Product } from "../../entities/product.entity";
 import { IProductsRepository } from "../../repositories/IProductsRepository";
 
 @injectable()
@@ -22,6 +22,8 @@ class UpdateImageProductUseCase {
     const productExists = await this.productsRepository.findById(id);
 
     if (!productExists) {
+      await this.storageProvider.save(image, "products");
+      await this.storageProvider.delete(image, "products");
       throw new AppError("Product does not exists!");
     }
 

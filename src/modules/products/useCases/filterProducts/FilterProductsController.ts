@@ -10,10 +10,10 @@ class FilterProductsController {
     const filterProductsUseCase = container.resolve(FilterProductsUseCase);
 
     const products = await filterProductsUseCase.execute({
-      name: String(name),
-      group_id: String(group_id),
-      category_id: String(category_id),
-      supplier_id: String(supplier_id),
+      name: name ? String(name) : "",
+      group_id: group_id ? String(group_id) : "",
+      category_id: category_id ? String(category_id) : "",
+      supplier_id: supplier_id ? String(supplier_id) : "",
     });
 
     return response.json(products);

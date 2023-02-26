@@ -16,7 +16,7 @@ class CreateProductController {
     } else {
       const image = request.file.filename as string;
 
-      await createProductUseCase.execute({
+      const product = await createProductUseCase.execute({
         name,
         technical_description,
         image,
@@ -24,7 +24,7 @@ class CreateProductController {
         supplier_id,
       });
 
-      return response.status(201).send();
+      return response.status(201).json(product);
     }
   }
 }

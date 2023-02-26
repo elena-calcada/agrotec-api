@@ -1,29 +1,23 @@
 import { Product } from "@prisma/client";
 
 import prismaClient from "../../../../shared/infra/prisma/prisma.config";
-import { ICreateProductsDTO } from "../../dtos/ICreateProductsDTO";
 import { IFilterProductDTO } from "../../dtos/IFilterProductDTO";
 import { IUpdateImageProductDTO } from "../../dtos/IUpdateImageProductDTO";
 import { IUpdateInfoProductDTO } from "../../dtos/IUpdateProductDTO";
 import { IProductsRepository } from "../IProductsRepository";
 
 class ProductsRepository implements IProductsRepository {
-  async create({
-    name,
-    technical_description,
-    image,
-    category_id,
-    supplier_id,
-  }: ICreateProductsDTO): Promise<void> {
-    await prismaClient.product.create({
+  async save(data: Product): Promise<Product> {
+    const product = await prismaClient.product.create({
       data: {
-        name,
-        technical_description,
-        image,
-        category_id,
-        supplier_id,
+        name: data.name,
+        technical_description: data.technical_description,
+        image: data.image,
+        category_id: data.category_id,
+        supplier_id: data.supplier_id,
       },
     });
+    return product;
   }
 
   async findByName(name: string): Promise<Product> {

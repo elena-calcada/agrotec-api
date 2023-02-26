@@ -21,7 +21,7 @@ class DetailCategoryController {
 
       const detailCategoryUseCase = container.resolve(DetailCategoryUseCase);
 
-      const category = await detailCategoryUseCase.execute(id as string);
+      const category = await detailCategoryUseCase.execute(id);
 
       return response.json(category);
     } catch (err: any) {

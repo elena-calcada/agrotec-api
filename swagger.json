@@ -656,7 +656,7 @@
             "description": "Success"
           },
           "400": {
-            "description": "Supplier does not exists!"
+            "description": "Product does not exists!"
           },
           "401": {
             "description": "Unauthorized"
@@ -947,6 +947,272 @@
           },
           "400": {
             "description": "Category group does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/products": {
+      "post": {
+        "summary": "Create product",
+        "description": "Create a product",
+        "tags": [
+          "products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/ProductsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List all products",
+        "description": "List all products",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update product information",
+        "description": "Update product information",
+        "tags": [
+          "products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductInformationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Supplier does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/products/filter": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Product name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "group_id",
+            "in": "query",
+            "description": "Category Group id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category_id",
+            "in": "query",
+            "description": "Category id",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "supplier_id",
+            "in": "query",
+            "description": "Supplier id",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "summary": "Filter products",
+        "description": "Filter products",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/products/detail/{id}": {
+      "get": {
+        "tags": [
+          "products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List product detail",
+        "description": "List product detail",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "product id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Category does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/products/image": {
+      "put": {
+        "summary": "Update product image",
+        "description": "Update product image",
+        "tags": [
+          "products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductImageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Product does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "delete": {
+        "tags": [
+          "products"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete a product",
+        "description": "Delete a product",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Product id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Product does not exists!"
           },
           "401": {
             "description": "Unauthorized"
@@ -1485,6 +1751,83 @@
         "required": [
           "id",
           "name"
+        ]
+      },
+      "ProductsRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Product name"
+          },
+          "technical_description": {
+            "type": "string",
+            "description": "Product description"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary"
+          },
+          "category_id": {
+            "type": "string",
+            "description": "Category ID"
+          },
+          "supplier_id": {
+            "type": "string",
+            "description": "Supplier ID"
+          }
+        },
+        "required": [
+          "name",
+          "technical_description",
+          "file",
+          "category_id",
+          "supplier_id"
+        ]
+      },
+      "UpdateProductInformationRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Product ID",
+            "example": "product_id"
+          },
+          "name": {
+            "type": "string",
+            "description": "Product name",
+            "example": "product_name"
+          },
+          "technical_description": {
+            "type": "string",
+            "description": "Product description",
+            "example": "product_description"
+          },
+          "category_id": {
+            "type": "string",
+            "description": "Category ID"
+          },
+          "supplier_id": {
+            "type": "string",
+            "description": "Supplier ID"
+          }
+        }
+      },
+      "UpdateProductImageRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Product id"
+          },
+          "file": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "required": [
+          "file",
+          "id"
         ]
       }
     },

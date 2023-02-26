@@ -5,11 +5,11 @@ import { DetailProductUseCase } from "./DetailProductUseCase";
 
 class DetailProductController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.query;
+    const { id } = request.params;
 
     const detailProductUseCase = container.resolve(DetailProductUseCase);
 
-    const product = await detailProductUseCase.execute(id as string);
+    const product = await detailProductUseCase.execute(id);
 
     return response.json(product);
   }

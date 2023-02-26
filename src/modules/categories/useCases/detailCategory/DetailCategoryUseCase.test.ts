@@ -4,19 +4,25 @@ import { describe, beforeEach, test, expect } from "vitest";
 import { CategoryGroupRepositoryInMemory } from "../../repositories/in-memory/CategoryGroupRepositoryInMemory";
 import { CategoryRepositoryInMemory } from "../../repositories/in-memory/CategoryRepositoryInMemory";
 import { CreateCategorysUseCase } from "../createCategory/CreateCategoryUseCase";
+import { CreateCategoryGroupUseCase } from "../createCategoryGroup/CreateCategoryGroupUseCase";
 import { DetailCategoryUseCase } from "./DetailCategoryUseCase";
 
+let categoryGroupRepositoryInMemory: CategoryGroupRepositoryInMemory;
+let createCategoryGroupUseCase: CreateCategoryGroupUseCase;
 let categoryRepositoryInMemory: CategoryRepositoryInMemory;
-let categoryGroupRepository: CategoryGroupRepositoryInMemory;
 let createCategoryUseCase: CreateCategorysUseCase;
 let detailCategoryUseCase: DetailCategoryUseCase;
 
 describe("Detail Category", () => {
   beforeEach(() => {
+    categoryGroupRepositoryInMemory = new CategoryGroupRepositoryInMemory();
+    createCategoryGroupUseCase = new CreateCategoryGroupUseCase(
+      categoryGroupRepositoryInMemory
+    );
     categoryRepositoryInMemory = new CategoryRepositoryInMemory();
     createCategoryUseCase = new CreateCategorysUseCase(
       categoryRepositoryInMemory,
-      categoryGroupRepository
+      categoryGroupRepositoryInMemory
     );
     detailCategoryUseCase = new DetailCategoryUseCase(
       categoryRepositoryInMemory
@@ -24,10 +30,15 @@ describe("Detail Category", () => {
   });
 
   test("Should be able to access category detail", async () => {
+    const group = await createCategoryGroupUseCase.execute({
+      name: "group_name",
+      description: "group_description",
+    });
+
     const category = await createCategoryUseCase.execute({
       name: "category_name",
       description: "category_description",
-      group_id: "group_id",
+      group_id: group.id,
     });
 
     const categoryDetail = await detailCategoryUseCase.execute(category.id);

@@ -47,14 +47,14 @@ productsRoutes.get(
 );
 
 productsRoutes.get(
-  "/detail",
+  "/detail/:id",
   ensureAuthenticated,
   ensureExecutor,
   detailProductController.handle
 );
 
 productsRoutes.put(
-  "/info",
+  "/",
   ensureAuthenticated,
   ensureExecutor,
   updateInfoProductController.handle
@@ -69,7 +69,7 @@ productsRoutes.put(
 );
 
 productsRoutes.delete(
-  "/",
+  "/:id",
   ensureAuthenticated,
   ensureExecutor,
   deleteProductController.handle

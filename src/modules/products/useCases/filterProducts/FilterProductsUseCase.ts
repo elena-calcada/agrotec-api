@@ -1,7 +1,7 @@
-import { Product } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 
 import { IFilterProductDTO } from "../../dtos/IFilterProductDTO";
+import { Product } from "../../entities/product.entity";
 import { IProductsRepository } from "../../repositories/IProductsRepository";
 
 @injectable()

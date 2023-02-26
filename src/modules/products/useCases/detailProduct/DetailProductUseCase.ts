@@ -1,7 +1,7 @@
-import { Product } from "@prisma/client";
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../shared/errors/AppError";
+import { Product } from "../../entities/product.entity";
 import { IProductsRepository } from "../../repositories/IProductsRepository";
 
 @injectable()
