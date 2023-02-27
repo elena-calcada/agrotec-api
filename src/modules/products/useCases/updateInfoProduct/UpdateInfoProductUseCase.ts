@@ -1,6 +1,8 @@
 import { inject, injectable } from "tsyringe";
 
 import { AppError } from "../../../../shared/errors/AppError";
+import { ICategoriesRepository } from "../../../categories/repositories/ICategoriesRepository";
+import { ISupplierRepository } from "../../../supplier/repositories/ISupplierRepository";
 import { IUpdateInfoProductDTO } from "../../dtos/IUpdateProductDTO";
 import { Product } from "../../entities/product.entity";
 import { IProductsRepository } from "../../repositories/IProductsRepository";
@@ -9,7 +11,11 @@ import { IProductsRepository } from "../../repositories/IProductsRepository";
 class UpdateInfoProductUseCase {
   constructor(
     @inject("ProductsRepository")
-    private productsRepository: IProductsRepository
+    private productsRepository: IProductsRepository,
+    @inject("CategoriesRepository")
+    private categoriesRepository: ICategoriesRepository,
+    @inject("SupplierRepository")
+    private supplierRepository: ISupplierRepository
   ) {}
 
   async execute({
@@ -27,6 +33,20 @@ class UpdateInfoProductUseCase {
 
     if (!productExists) {
       throw new AppError("Product does not exists!");
+    }
+
+    const categoryExists = await this.categoriesRepository.findById(
+      category_id
+    );
+
+    if (!categoryExists) {
+      throw new AppError("Categoty does not exists!");
+    }
+
+    const supplierExists = await this.supplierRepository.findById(supplier_id);
+
+    if (!supplierExists) {
+      throw new AppError("Supplier does not exists!");
     }
 
     const product = await this.productsRepository.updateInfoProduct({

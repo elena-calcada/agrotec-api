@@ -15,7 +15,7 @@ class UpdateInfoProductController {
         message: "Invalid id",
       }),
       name: z.string(),
-      technical_description: z.string(),
+      technical_description: z.string().max(200),
       category_id: z.string().uuid({
         message: "Invalid id",
       }),
