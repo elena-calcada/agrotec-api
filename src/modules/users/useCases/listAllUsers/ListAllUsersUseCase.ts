@@ -10,8 +10,8 @@ class ListAllUsersUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute(): Promise<IReturnUserDTO[]> {
-    const users = await this.usersRepository.listAllUsers();
+  async execute(id: string): Promise<IReturnUserDTO[]> {
+    const users = await this.usersRepository.listAllUsers(id);
 
     return users;
   }

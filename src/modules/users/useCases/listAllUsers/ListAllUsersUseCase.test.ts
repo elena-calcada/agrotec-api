@@ -29,7 +29,7 @@ describe("List All Users", () => {
       password: "pedro",
     });
 
-    const list = await listAllUsersUseCase.execute();
+    const list = await listAllUsersUseCase.execute("logged_in_user_id");
 
     expect(list.length).toBe(2);
     expect(list[0].name).toEqual("João");

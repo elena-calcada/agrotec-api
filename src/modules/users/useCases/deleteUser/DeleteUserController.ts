@@ -8,7 +8,7 @@ import { DeleteUserUseCase } from "./DeleteUserUseCase";
 
 class DeleteUserController {
   async handle(request: Request, response: Response): Promise<Response> {
-    const { id } = request.query;
+    const { id } = request.params;
 
     const deleteSchema = z.object({
       id: z.string().uuid({
@@ -21,7 +21,7 @@ class DeleteUserController {
 
       const deleteUserUseCase = container.resolve(DeleteUserUseCase);
 
-      await deleteUserUseCase.execute(id as string);
+      await deleteUserUseCase.execute(id);
 
       return response.status(200).send();
     } catch (err: any) {

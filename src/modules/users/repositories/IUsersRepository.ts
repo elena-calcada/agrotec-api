@@ -12,7 +12,7 @@ interface IUsersRepository {
   turnUserExecutor(id: string): Promise<IReturnUserDTO>;
   removeUserAccess(id: string): Promise<IReturnUserDTO>;
   deleteUser(id: string): Promise<void>;
-  listAllUsers(): Promise<IReturnUserDTO[]>;
+  listAllUsers(id: string): Promise<IReturnUserDTO[]>;
   detailUser(id: string): Promise<IReturnUserDTO>;
   updateUserPassword({ id, password }: IUpdateUserPasswordDTO): Promise<void>;
   updateUserName({ id, name }: IUpdateUserNameDTO): Promise<IReturnUserDTO>;

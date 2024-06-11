@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "ts-node-dev --exit-child --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
     "test": "vitest",
-    "test:e2e": "vitest --config ./test/test.e2e.config.ts"
+    "test:e2e": "vitest --config ./test/test.e2e.config.ts",
+    "start": "npx prisma migrate dev && npm run dev"
   },
   "devDependencies": {
     "@jest/environment": "^29.3.1",

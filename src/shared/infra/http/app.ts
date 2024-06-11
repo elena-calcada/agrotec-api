@@ -24,7 +24,9 @@ app.use(router);
 
 app.use(
   "/images",
-  express.static(path.resolve(__dirname, "..", "..", "tmp", "products"))
+  express.static(
+    path.resolve(__dirname, "..", "..", "..", "..", "tmp", "products")
+  )
 );
 
 app.use(

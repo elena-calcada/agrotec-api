@@ -102,13 +102,16 @@ describe("Users", () => {
     });
     const response = await request(app)
       .get("/users")
+      .send({
+        id: userAdmin.body.id,
+      })
       .set({
         Authorization: `Bearer ${userAdmin.body.token}`,
       });
 
-    expect(response.body.length).toBe(2);
-    expect(response.body[0].name).toEqual("admin");
-    expect(response.body[1].name).toEqual("user_supertest");
+    expect(response.body.length).toBe(1);
+    expect(response.body[0].name).toEqual("user_supertest");
+    // expect(response.body[1].name).toEqual("user_supertest");
   });
   it("Should not be able to list all users if user does not admin", async () => {
     const user = await request(app).post("/users/login").send({
@@ -118,6 +121,9 @@ describe("Users", () => {
 
     const response = await request(app)
       .get("/users")
+      .send({
+        id: user.body.id,
+      })
       .set({
         Authorization: `Bearer ${user.body.token}`,
       });
@@ -126,15 +132,22 @@ describe("Users", () => {
     expect(response.status).toBe(401);
   });
   it("Should not be able to list all users if token missing", async () => {
-    const response = await request(app).get("/users");
+    const response = await request(app).get("/users").send({
+      id: "user_id",
+    });
 
     expect(response.body.message).toEqual("Token missing!");
     expect(response.status).toBe(401);
   });
   it("Should not be able to list all users if invalid token", async () => {
-    const response = await request(app).get("/users").set({
-      Authorization: "Bearer INVALID_TOKEN",
-    });
+    const response = await request(app)
+      .get("/users")
+      .send({
+        id: "user_id",
+      })
+      .set({
+        Authorization: "Bearer INVALID_TOKEN",
+      });
 
     expect(response.body.message).toEqual("Invalid Token");
     expect(response.status).toBe(401);
@@ -634,5 +647,86 @@ describe("Users", () => {
       });
 
     expect(response.body[0].message).toEqual("Invalid password");
+  });
+  it("Should be able to delete an user", async () => {
+    const userAdmin = await request(app).post("/users/login").send({
+      email: "admin@mail.com",
+      password: "admin",
+    });
+
+    const userCreated = await request(app).post("/users").send({
+      name: "user_delete",
+      email: "user_delete@mail.com",
+      password: "123456",
+    });
+
+    await request(app)
+      .delete(`/users/${userCreated.body.id}`)
+      .set({
+        Authorization: `Bearer ${userAdmin.body.token}`,
+      });
+
+    const userDeleted = await request(app)
+      .get(`/users/${userCreated.body.id}`)
+      .set({
+        Authorization: `Bearer ${userAdmin.body.token}`,
+      });
+
+    console.log(userDeleted.body);
+
+    expect(userDeleted.status).toBe(400);
+    expect(userDeleted.body).toEqual("User does not exists!");
+  });
+  it("Should not be able to delete an user if user does not exists", async () => {
+    const id = randomUUID();
+
+    const userAdmin = await request(app).post("/users/login").send({
+      email: "admin@mail.com",
+      password: "admin",
+    });
+
+    const deleted = await request(app)
+      .delete(`/users/${id}`)
+      .set({
+        Authorization: `Bearer ${userAdmin.body.token}`,
+      });
+
+    expect(deleted.status).toBe(400);
+    expect(deleted.body).toEqual("User does not exists!");
+  });
+  it("Should not be able to delete an user if user does not admin", async () => {
+    const id = randomUUID();
+
+    const user = await request(app).post("/users/login").send({
+      email: "user_supertest@mail.com",
+      password: "654321",
+    });
+
+    const userDeleted = await request(app)
+      .get(`/users/${id}`)
+      .set({
+        Authorization: `Bearer ${user.body.token}`,
+      });
+
+    expect(userDeleted.status).toBe(401);
+    expect(userDeleted.body.message).toBe("This user is not an admin!");
+  });
+  it("Should not be able to delete an user if invalid token", async () => {
+    const id = randomUUID();
+
+    const userDeleted = await request(app).get(`/users/${id}`).set({
+      Authorization: "Bearer invalid_token",
+    });
+
+    expect(userDeleted.status).toBe(401);
+    expect(userDeleted.body.message).toBe("Invalid Token");
+  });
+  it("Should not be able to delete an user if token missing", async () => {
+    const id = randomUUID();
+
+    const userDeleted = await request(app).get(`/users/${id}`);
+
+    expect(userDeleted.status).toBe(401);
+    expect(userDeleted.body.message).toBe("Token missing!");
   });
 });

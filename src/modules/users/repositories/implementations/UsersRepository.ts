@@ -128,8 +128,13 @@ class UsersRepository implements IUsersRepository {
     });
   }
 
-  async listAllUsers(): Promise<IReturnUserDTO[]> {
+  async listAllUsers(id: string): Promise<IReturnUserDTO[]> {
     const users = await prismaClient.user.findMany({
+      where: {
+        NOT: {
+          id,
+        },
+      },
       orderBy: {
         name: "asc",
       },

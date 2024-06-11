@@ -62,8 +62,8 @@ class UsersRepositoryInMemory implements IUsersRepository {
     this.users.splice(index, 1);
   }
 
-  async listAllUsers(): Promise<IReturnUserDTO[]> {
-    const allUsers = this.users;
+  async listAllUsers(id: string): Promise<IReturnUserDTO[]> {
+    const allUsers = this.users.filter((user) => user.id !== id);
     return allUsers;
   }
 

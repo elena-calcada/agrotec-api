@@ -60,43 +60,6 @@
             "description": "Unauthorized"
           }
         }
-      },
-      "delete": {
-        "tags": [
-          "users"
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "summary": "Delete an user",
-        "description": "Delete an user",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "description": "User id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success"
-          },
-          "400": {
-            "description": "User does not exists!"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "422": {
-            "description": "Unprocessable Entity"
-          }
-        }
       }
     },
     "/users/login": {
@@ -193,6 +156,43 @@
           },
           "401": {
             "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Delete an user",
+        "description": "Delete an user",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "User id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "User does not exists!"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "422": {
+            "description": "Unprocessable Entity"
           }
         }
       }

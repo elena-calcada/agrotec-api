@@ -54,7 +54,7 @@ usersRoutes.put(
 );
 
 usersRoutes.delete(
-  "/",
+  "/:id",
   ensureAuthenticated,
   ensureAdmin,
   deleteUserController.handle
